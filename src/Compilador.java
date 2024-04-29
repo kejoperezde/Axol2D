@@ -89,7 +89,6 @@ public class Compilador extends javax.swing.JFrame {
         rootPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtpCode = new javax.swing.JTextPane();
-        panelButtonCompilerExecute = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtaOutputConsole = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -113,26 +112,14 @@ public class Compilador extends javax.swing.JFrame {
         menuVariable = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
         rootPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jScrollPane1.setViewportView(jtpCode);
 
-        rootPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 693, 351));
-
-        javax.swing.GroupLayout panelButtonCompilerExecuteLayout = new javax.swing.GroupLayout(panelButtonCompilerExecute);
-        panelButtonCompilerExecute.setLayout(panelButtonCompilerExecuteLayout);
-        panelButtonCompilerExecuteLayout.setHorizontalGroup(
-            panelButtonCompilerExecuteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 169, Short.MAX_VALUE)
-        );
-        panelButtonCompilerExecuteLayout.setVerticalGroup(
-            panelButtonCompilerExecuteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 36, Short.MAX_VALUE)
-        );
-
-        rootPanel.add(panelButtonCompilerExecute, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 480, -1, -1));
+        rootPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 693, 440));
 
         jtaOutputConsole.setEditable(false);
         jtaOutputConsole.setBackground(new java.awt.Color(255, 255, 255));
@@ -140,7 +127,7 @@ public class Compilador extends javax.swing.JFrame {
         jtaOutputConsole.setRows(5);
         jScrollPane2.setViewportView(jtaOutputConsole);
 
-        rootPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 1040, 160));
+        rootPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 450, 1040, 170));
 
         tblTokens.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -163,7 +150,7 @@ public class Compilador extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(tblTokens);
 
-        rootPanel.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 20, 350, 351));
+        rootPanel.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, 350, 440));
 
         getContentPane().add(rootPanel);
 
@@ -678,7 +665,6 @@ public class Compilador extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuSalir;
     private javax.swing.JMenuItem menuSintactico;
     private javax.swing.JMenuItem menuVariable;
-    private javax.swing.JPanel panelButtonCompilerExecute;
     private javax.swing.JPanel rootPanel;
     private javax.swing.JTable tblTokens;
     // End of variables declaration//GEN-END:variables
