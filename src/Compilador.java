@@ -51,7 +51,7 @@ public class Compilador extends javax.swing.JFrame {
     }
 
     private void init() {
-        title = "RoboMind";
+        title = "Axol2D";
         setLocationRelativeTo(null);
         setTitle(title);
         directorio = new Directory(this, jtpCode, title, ".robo");
@@ -87,121 +87,60 @@ public class Compilador extends javax.swing.JFrame {
     private void initComponents() {
 
         rootPanel = new javax.swing.JPanel();
-        buttonsFilePanel = new javax.swing.JPanel();
-        btnAbrir = new javax.swing.JButton();
-        btnNuevo = new javax.swing.JButton();
-        btnGuardar = new javax.swing.JButton();
-        btnGuardarC = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtpCode = new javax.swing.JTextPane();
         panelButtonCompilerExecute = new javax.swing.JPanel();
-        btnCompilar = new javax.swing.JButton();
-        btnEjecutar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtaOutputConsole = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblTokens = new javax.swing.JTable();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        menuNuevo = new javax.swing.JMenuItem();
+        menuAbrir = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        menuGuardar = new javax.swing.JMenuItem();
+        menuGuardarComo = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        menuSalir = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        menuLexico = new javax.swing.JMenuItem();
+        menuSintactico = new javax.swing.JMenuItem();
+        menuCompilar = new javax.swing.JMenuItem();
+        menuEjecutar = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        menuFija = new javax.swing.JMenuItem();
+        menuVariable = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
-        btnAbrir.setText("Abrir");
-        btnAbrir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAbrirActionPerformed(evt);
-            }
-        });
-
-        btnNuevo.setText("Nuevo");
-        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoActionPerformed(evt);
-            }
-        });
-
-        btnGuardar.setText("Guardar");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
-        });
-
-        btnGuardarC.setText("Guardar como");
-        btnGuardarC.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarCActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout buttonsFilePanelLayout = new javax.swing.GroupLayout(buttonsFilePanel);
-        buttonsFilePanel.setLayout(buttonsFilePanelLayout);
-        buttonsFilePanelLayout.setHorizontalGroup(
-            buttonsFilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(buttonsFilePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnNuevo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAbrir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnGuardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnGuardarC)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        buttonsFilePanelLayout.setVerticalGroup(
-            buttonsFilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(buttonsFilePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(buttonsFilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAbrir)
-                    .addComponent(btnNuevo)
-                    .addComponent(btnGuardar)
-                    .addComponent(btnGuardarC))
-                .addContainerGap(16, Short.MAX_VALUE))
-        );
+        rootPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jScrollPane1.setViewportView(jtpCode);
 
-        btnCompilar.setText("Compilar");
-        btnCompilar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCompilarActionPerformed(evt);
-            }
-        });
-
-        btnEjecutar.setText("Ejecutar");
-        btnEjecutar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEjecutarActionPerformed(evt);
-            }
-        });
+        rootPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 693, 351));
 
         javax.swing.GroupLayout panelButtonCompilerExecuteLayout = new javax.swing.GroupLayout(panelButtonCompilerExecute);
         panelButtonCompilerExecute.setLayout(panelButtonCompilerExecuteLayout);
         panelButtonCompilerExecuteLayout.setHorizontalGroup(
             panelButtonCompilerExecuteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelButtonCompilerExecuteLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCompilar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEjecutar)
-                .addContainerGap())
+            .addGap(0, 169, Short.MAX_VALUE)
         );
         panelButtonCompilerExecuteLayout.setVerticalGroup(
             panelButtonCompilerExecuteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelButtonCompilerExecuteLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelButtonCompilerExecuteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCompilar)
-                    .addComponent(btnEjecutar))
-                .addContainerGap(7, Short.MAX_VALUE))
+            .addGap(0, 36, Short.MAX_VALUE)
         );
+
+        rootPanel.add(panelButtonCompilerExecute, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 480, -1, -1));
 
         jtaOutputConsole.setEditable(false);
         jtaOutputConsole.setBackground(new java.awt.Color(255, 255, 255));
         jtaOutputConsole.setColumns(20);
         jtaOutputConsole.setRows(5);
         jScrollPane2.setViewportView(jtaOutputConsole);
+
+        rootPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 1040, 160));
 
         tblTokens.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -224,70 +163,128 @@ public class Compilador extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(tblTokens);
 
-        javax.swing.GroupLayout rootPanelLayout = new javax.swing.GroupLayout(rootPanel);
-        rootPanel.setLayout(rootPanelLayout);
-        rootPanelLayout.setHorizontalGroup(
-            rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rootPanelLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, rootPanelLayout.createSequentialGroup()
-                        .addComponent(buttonsFilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(panelButtonCompilerExecute, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 693, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 693, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
-                .addGap(17, 17, 17))
-        );
-        rootPanelLayout.setVerticalGroup(
-            rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rootPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonsFilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelButtonCompilerExecute, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(rootPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(8, Short.MAX_VALUE))
-        );
+        rootPanel.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 20, 350, 351));
 
         getContentPane().add(rootPanel);
 
+        jMenu1.setText("Archivo");
+
+        menuNuevo.setText("Nuevo");
+        menuNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuNuevoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuNuevo);
+
+        menuAbrir.setText("Abrir");
+        menuAbrir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAbrirActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuAbrir);
+        jMenu1.add(jSeparator1);
+
+        menuGuardar.setText("Guardar");
+        menuGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuGuardarActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuGuardar);
+
+        menuGuardarComo.setText("Guardar Como");
+        menuGuardarComo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuGuardarComoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuGuardarComo);
+        jMenu1.add(jSeparator2);
+
+        menuSalir.setText("Salir");
+        menuSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSalirActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuSalir);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Compilador");
+
+        menuLexico.setText("Léxico");
+        jMenu2.add(menuLexico);
+
+        menuSintactico.setText("Sintáctico");
+        jMenu2.add(menuSintactico);
+
+        menuCompilar.setText("Compilar");
+        menuCompilar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCompilarActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuCompilar);
+
+        menuEjecutar.setText("Ejecutar");
+        menuEjecutar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuEjecutarActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuEjecutar);
+
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("TS");
+
+        menuFija.setText("Fija");
+        jMenu3.add(menuFija);
+
+        menuVariable.setText("Variable");
+        jMenu3.add(menuVariable);
+
+        jMenuBar1.add(jMenu3);
+
+        setJMenuBar(jMenuBar1);
+
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+    private void menuNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNuevoActionPerformed
         directorio.New();
         clearFields();
-    }//GEN-LAST:event_btnNuevoActionPerformed
+    }//GEN-LAST:event_menuNuevoActionPerformed
 
-    private void btnAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirActionPerformed
+    private void menuAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAbrirActionPerformed
         if (directorio.Open()) {
             colorAnalysis();
             clearFields();
         }
-    }//GEN-LAST:event_btnAbrirActionPerformed
+    }//GEN-LAST:event_menuAbrirActionPerformed
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+    private void menuGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGuardarActionPerformed
         if (directorio.Save()) {
             clearFields();
         }
-    }//GEN-LAST:event_btnGuardarActionPerformed
+    }//GEN-LAST:event_menuGuardarActionPerformed
 
-    private void btnGuardarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCActionPerformed
+    private void menuGuardarComoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGuardarComoActionPerformed
         if (directorio.SaveAs()) {
             clearFields();
         }
-    }//GEN-LAST:event_btnGuardarCActionPerformed
+    }//GEN-LAST:event_menuGuardarComoActionPerformed
 
-    private void btnCompilarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompilarActionPerformed
+    private void menuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSalirActionPerformed
+        directorio.Exit();
+        System.exit(0);
+    }//GEN-LAST:event_menuSalirActionPerformed
+
+    private void menuCompilarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCompilarActionPerformed
         if (getTitle().contains("*") || getTitle().equals(title)) {
             if (directorio.Save()) {
                 compile();
@@ -295,10 +292,10 @@ public class Compilador extends javax.swing.JFrame {
         } else {
             compile();
         }
-    }//GEN-LAST:event_btnCompilarActionPerformed
+    }//GEN-LAST:event_menuCompilarActionPerformed
 
-    private void btnEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecutarActionPerformed
-        btnCompilar.doClick();
+    private void menuEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEjecutarActionPerformed
+        menuCompilar.doClick();
         if (codeHasBeenCompiled) {
             if (errors.size() > 0) {
                 JOptionPane.showMessageDialog(null, "No se puede ejecutar el código ya que se encontró uno o más errores",
@@ -312,7 +309,7 @@ public class Compilador extends javax.swing.JFrame {
 
             }
         }
-    }//GEN-LAST:event_btnEjecutarActionPerformed
+    }//GEN-LAST:event_menuEjecutarActionPerformed
 
     private void executeCode(ArrayList<String> blocksOfCode, int repeats) {
         for (int j = 1; j <= repeats; j++) {
@@ -659,18 +656,28 @@ public class Compilador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAbrir;
-    private javax.swing.JButton btnCompilar;
-    private javax.swing.JButton btnEjecutar;
-    private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnGuardarC;
-    private javax.swing.JButton btnNuevo;
-    private javax.swing.JPanel buttonsFilePanel;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JTextArea jtaOutputConsole;
     private javax.swing.JTextPane jtpCode;
+    private javax.swing.JMenuItem menuAbrir;
+    private javax.swing.JMenuItem menuCompilar;
+    private javax.swing.JMenuItem menuEjecutar;
+    private javax.swing.JMenuItem menuFija;
+    private javax.swing.JMenuItem menuGuardar;
+    private javax.swing.JMenuItem menuGuardarComo;
+    private javax.swing.JMenuItem menuLexico;
+    private javax.swing.JMenuItem menuNuevo;
+    private javax.swing.JMenuItem menuSalir;
+    private javax.swing.JMenuItem menuSintactico;
+    private javax.swing.JMenuItem menuVariable;
     private javax.swing.JPanel panelButtonCompilerExecute;
     private javax.swing.JPanel rootPanel;
     private javax.swing.JTable tblTokens;
