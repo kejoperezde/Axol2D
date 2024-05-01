@@ -1,9 +1,32 @@
-				
-repetirMientras( frenteEsClaro() = (izquierdaEsBlanco($) - derechaEsBlanco("4")){
-    adelnte( //);
+variable
+
+true
+false
+
+254
+
+65000
+
+A
+
+(
+)
+{
 }
 
-si(lanzarMoneda) & derechaEsBlanco(}]*
-[
-    d7recha()
-    atrás(1);
+if
+else
+
+switch
+case
+break
+
+for
+while
+
+try
+catch
+
+&
+|
+!

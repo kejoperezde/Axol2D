@@ -34,11 +34,24 @@ Numero = 0 | [1-9][0-9]*
 {Comentario}|{EspacioEnBlanco} { /*Ignorar*/ }
 
 /* Identificador */
-\${Identificador} { return token(yytext(), "IDENTIFICADOR", yyline, yycolumn); }
+{Identificador} { return token(yytext(), "IDENTIFICADOR", yyline, yycolumn); }
 
 /* Tipos de dato */
-número |
-color { return token(yytext(), "TIPO_DATO", yyline, yycolumn); }
+boolean | byte | int | char | string
+{ return token(yytext(), "TIPO_DATO", yyline, yycolumn); }
+
+/* boolean */
+(true|false) { return token(yytext(), "BOOLEAN", yyline, yycolumn); }
+
+/* byte */
+(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?) { return token(yytext(), "BYTE", yyline, yycolumn); }
+
+/* int */
+(6553[0-4]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5]?[0-9]{1,4})
+{ return token(yytext(), "INT", yyline, yycolumn); }
+
+/* char */
+[A-Za-z] { return token(yytext(), "CHAR", yyline, yycolumn); }
 
 /* Número */
 {Numero} { return token(yytext(), "NUMERO", yyline, yycolumn); }
@@ -57,69 +70,35 @@ color { return token(yytext(), "TIPO_DATO", yyline, yycolumn); }
 ";" { return token(yytext(), "PUNTO_COMA", yyline, yycolumn); }
 
 /* Operador de asignación */
---> { return token (yytext(), "OP_ASIG", yyline, yycolumn); }
+"=" { return token (yytext(), "OP_ASIG", yyline, yycolumn); }
 
-/* Movimiento */
-adelante |
-atrás |
-izquierda |
-derecha |
-norte |
-sur |
-este |
-oeste { return token(yytext(), "MOVIMIENTO", yyline, yycolumn); }
+/* if else */
+if | else { return token(yytext(), "ESTRUCTURA_IF_ELSE", yyline, yycolumn); }
 
-/* Pintar */
-pintar { return token(yytext(), "PINTAR", yyline, yycolumn); }
+/* switch */
+switch | case | break { return token(yytext(), "ESTRUCTURA_SWITCH", yyline, yycolumn); }
 
-/* Detener pintar */
-detenerPintar { return token(yytext(), "DETENER_PINTAR", yyline, yycolumn); }
+/* for */
+for { return token(yytext(), "ESTRUCTURA_FOR", yyline, yycolumn);
 
-/* Tomar */
-tomar |
-poner { return token(yytext(), "TOMAR", yyline, yycolumn); }
+/* whilie */
+while { return token(yytext(), "ESTRUCTURA_WHILE", yyline, yycolumn); } }
 
-/* Lanzar Moneda */
-lanzarMoneda { return token(yytext(), "LANZAR_MONEDA", yyline, yycolumn); }
-
-/* Ver */
-izquierdaEsObstáculo |
-izquierdaEsClaro |
-izquierdaEsBaliza |
-izquierdaEsBlanco |
-izquierdaEsNegro |
-frenteEsObstáculo |
-frenteEsClaro |
-frenteEsBaliza |
-frenteEsBlanco |
-frenteEsNegro |
-derechaEsObstáculo |
-derechaEsClaro |
-derechaEsBaliza |
-derechaEsBlanco |
-derechaEsNegro { return token(yytext(), "VER", yyline, yycolumn); }
-
-/* Repetir */
-repetir |
-repetirMientras { return token(yytext(), "REPETIR", yyline, yycolumn); }
-
-/* Detener repetir */
-interrumpir { return token(yytext(), "DETENER_REPETIR", yyline, yycolumn); }
-
-/* Estructura si */
-si |
-sino { return token(yytext(), "ESTRUCTURA_SI", yyline, yycolumn); }
+/* try catch */
+try | catch { return token(yytext(), "ESTRUCUTRA_TRY_CATCH", yyline, yycolumn); }
 
 /* Operadores lógicos */
-"&" |
-"|" { return token(yytext(), "OP_LOGICO", yyline, yycolumn); }
+"&" | "|" | "!" { return token(yytext(), "OP_LOGICO", yyline, yycolumn); }
 
 /* Final */
 final { return token(yytext(), "FINAL", yyline, yycolumn); }
 
-/* Errores */
+
+/* ERRORES */
+
 // Número erróneo
-0 {Numero}+ { return token(yytext(), "ERROR_1", yyline, yycolumn); }
+// 0 {Numero}+ { return token(yytext(), "ERROR_1", yyline, yycolumn); }
+
 // Identificador sin $
-{Identificador} { return token(yytext(), "ERROR_2", yyline, yycolumn); }
-. { return token(yytext(), "ERROR", yyline, yycolumn); }
+// {Identificador} { return token(yytext(), "ERROR_2", yyline, yycolumn); }
+//. { return token(yytext(), "ERROR", yyline, yycolumn); }

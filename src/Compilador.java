@@ -51,30 +51,38 @@ public class Compilador extends javax.swing.JFrame {
     }
 
     private void init() {
+        // Poner título de la ventana
         title = "Axol2D";
         setLocationRelativeTo(null);
         setTitle(title);
-        directorio = new Directory(this, jtpCode, title, ".robo");
-        addWindowListener(new WindowAdapter() {// Cuando presiona la "X" de la esquina superior derecha
+        // Extensión .axol
+        directorio = new Directory(this, jtpCode, title, ".axol");
+        // Cuando presiona la "X" de la esquina superior derecha
+        addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 directorio.Exit();
                 System.exit(0);
             }
         });
+        // Función para poner lineas de codigo
         Functions.setLineNumberOnJTextComponent(jtpCode);
+        // Función para colorear palabras
         timerKeyReleased = new Timer((int) (1000 * 0.3), (ActionEvent e) -> {
             timerKeyReleased.stop();
             colorAnalysis();
         });
+        // Función para poner asterísco
         Functions.insertAsteriskInName(this, jtpCode, () -> {
             timerKeyReleased.restart();
         });
+        // Inicializar identificadores
         tokens = new ArrayList<>();
         errors = new ArrayList<>();
         textsColor = new ArrayList<>();
         identProd = new ArrayList<>();
         identificadores = new HashMap<>();
+        // Función para autocompletar (crtl + space)
         Functions.setAutocompleterJTextComponent(new String[]{"número", "color", "adelante", "atrás",
             "izquierda", "derecha", "norte", "sur", "este", "oeste", "pintar", "detenerPintar",
             "tomar", "poner", "lanzarMoneda"}, jtpCode, () -> {
@@ -203,6 +211,11 @@ public class Compilador extends javax.swing.JFrame {
         jMenu2.setText("Compilador");
 
         menuLexico.setText("Léxico");
+        menuLexico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuLexicoActionPerformed(evt);
+            }
+        });
         jMenu2.add(menuLexico);
 
         menuSintactico.setText("Sintáctico");
@@ -298,6 +311,16 @@ public class Compilador extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuEjecutarActionPerformed
 
+    private void menuLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLexicoActionPerformed
+        if (getTitle().contains("*") || getTitle().equals(title)) {
+            if (directorio.Save()) {
+                compileLexica();
+            }
+        } else {
+            compileLexica();
+        }
+    }//GEN-LAST:event_menuLexicoActionPerformed
+
     private void executeCode(ArrayList<String> blocksOfCode, int repeats) {
         for (int j = 1; j <= repeats; j++) {
             int repeatCode = -1;
@@ -353,6 +376,14 @@ public class Compilador extends javax.swing.JFrame {
         fillTableTokens();
         syntacticAnalysis();
         semanticAnalysis();
+        printConsole();
+        codeHasBeenCompiled = true;
+    }
+    
+    private void compileLexica() {
+        clearFields();
+        lexicalAnalysis();
+        fillTableTokens();
         printConsole();
         codeHasBeenCompiled = true;
     }
