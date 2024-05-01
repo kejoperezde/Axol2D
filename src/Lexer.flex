@@ -10,7 +10,9 @@ import compilerTools.Token;
         return new Token(lexeme, lexicalComp, line+1, column+1);
     }
 %}
+
 /* Variables básicas de comentarios y espacios */
+
 TerminadorDeLinea = \r|\n|\r\n
 EntradaDeCaracter = [^\r\n]
 EspacioEnBlanco = {TerminadorDeLinea} | [ \t\f]
@@ -30,18 +32,19 @@ Identificador = {Letra}({Letra}|{Digito})*
 /* Número */
 Numero = 0 | [1-9][0-9]*
 %%
+
 /* Comentarios o espacios en blanco */
 {Comentario}|{EspacioEnBlanco} { /*Ignorar*/ }
 
-/* Identificador */
-{Identificador} { return token(yytext(), "IDENTIFICADOR", yyline, yycolumn); }
-
 /* Tipos de dato */
-boolean | byte | int | char | string
-{ return token(yytext(), "TIPO_DATO", yyline, yycolumn); }
+boolean | 
+byte | 
+int | 
+char { return token(yytext(), "TIPO_DATO", yyline, yycolumn); }
 
 /* boolean */
-(true|false) { return token(yytext(), "BOOLEAN", yyline, yycolumn); }
+true |
+false { return token(yytext(), "BOOLEAN", yyline, yycolumn); }
 
 /* byte */
 (25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?) { return token(yytext(), "BYTE", yyline, yycolumn); }
@@ -53,17 +56,26 @@ boolean | byte | int | char | string
 /* char */
 [A-Za-z] { return token(yytext(), "CHAR", yyline, yycolumn); }
 
-/* Número */
-{Numero} { return token(yytext(), "NUMERO", yyline, yycolumn); }
+/* if else */
+if | else { return token(yytext(), "ES_IF_ELSE", yyline, yycolumn); }
 
-/* Colores */
-#[{Letra}{Digito}]{6} { return token(yytext(), "COLOR", yyline, yycolumn); }
+/* switch */
+switch | case | break { return token(yytext(), "ES_SWITCH", yyline, yycolumn); }
 
-/* Operadores de agrupación */
-"(" { return token(yytext(), "PARENTESIS_A", yyline, yycolumn); }
-")" { return token(yytext(), "PARENTESIS_C", yyline, yycolumn); }
-"{" { return token(yytext(), "LLAVE_A", yyline, yycolumn); }
-"}" { return token(yytext(), "LLAVE_C", yyline, yycolumn); }
+/* for */
+for { return token(yytext(), "ES_FOR", yyline, yycolumn); }
+
+/* whilie */
+while { return token(yytext(), "ES_WHILE", yyline, yycolumn); }
+
+/* try catch */
+try | catch { return token(yytext(), "ES_TRY_CATCH", yyline, yycolumn); }
+
+/* Identificador */
+{Identificador} { return token(yytext(), "IDENTIFICADOR", yyline, yycolumn); }
+
+/* Operadores lógicos */
+"&" | "|" | "!" { return token(yytext(), "OP_LOGICO", yyline, yycolumn); }
 
 /* Signos de puntuación */
 "," { return token(yytext(), "COMA", yyline, yycolumn); }
@@ -72,33 +84,10 @@ boolean | byte | int | char | string
 /* Operador de asignación */
 "=" { return token (yytext(), "OP_ASIG", yyline, yycolumn); }
 
-/* if else */
-if | else { return token(yytext(), "ESTRUCTURA_IF_ELSE", yyline, yycolumn); }
+/* Operadores de agrupación */
+"(" { return token(yytext(), "PARENTESIS_A", yyline, yycolumn); }
+")" { return token(yytext(), "PARENTESIS_C", yyline, yycolumn); }
+"{" { return token(yytext(), "LLAVE_A", yyline, yycolumn); }
+"}" { return token(yytext(), "LLAVE_C", yyline, yycolumn); }
 
-/* switch */
-switch | case | break { return token(yytext(), "ESTRUCTURA_SWITCH", yyline, yycolumn); }
-
-/* for */
-for { return token(yytext(), "ESTRUCTURA_FOR", yyline, yycolumn);
-
-/* whilie */
-while { return token(yytext(), "ESTRUCTURA_WHILE", yyline, yycolumn); } }
-
-/* try catch */
-try | catch { return token(yytext(), "ESTRUCUTRA_TRY_CATCH", yyline, yycolumn); }
-
-/* Operadores lógicos */
-"&" | "|" | "!" { return token(yytext(), "OP_LOGICO", yyline, yycolumn); }
-
-/* Final */
-final { return token(yytext(), "FINAL", yyline, yycolumn); }
-
-
-/* ERRORES */
-
-// Número erróneo
-// 0 {Numero}+ { return token(yytext(), "ERROR_1", yyline, yycolumn); }
-
-// Identificador sin $
-// {Identificador} { return token(yytext(), "ERROR_2", yyline, yycolumn); }
-//. { return token(yytext(), "ERROR", yyline, yycolumn); }
+. { return token(yytext(), "ERROR", yyline, yycolumn); }

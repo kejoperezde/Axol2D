@@ -39,14 +39,11 @@ Numero = 0 | [1-9][0-9]*
 \${Identificador} { /*Ignorar*/ }
 
 /* Tipos de dato */
-número |
-color { return textColor(yychar, yylength(), new Color(148, 58, 173)); }
+boolean | byte | int | char | string
+{ return textColor(yychar, yylength(), new Color(148, 58, 173)); }
 
 /* Número */
 {Numero} { return textColor(yychar, yylength(), new Color(35, 120, 147)); }
-
-/* Colores */
-#[{Letra}{Digito}]{6} { return textColor(yychar, yylength(), new Color(224, 195, 12)); }
 
 /* Operadores de agrupación */
 "("|")"|"{"|"}" { return textColor(yychar, yylength(), new Color(169, 155, 179)); }
@@ -56,7 +53,7 @@ color { return textColor(yychar, yylength(), new Color(148, 58, 173)); }
 ";" { return textColor(yychar, yylength(), new Color(169, 155, 179)); }
 
 /* Operador de asignación */
---> { return textColor(yychar, yylength(), new Color(169, 155, 179)); }
+= { return textColor(yychar, yylength(), new Color(169, 155, 179)); }
 
 /* Movimiento */
 adelante |
@@ -110,8 +107,8 @@ si |
 sino { return textColor(yychar, yylength(), new Color(48, 63, 159)); }
 
 /* Operadores lógicos */
-"&" |
-"|" { return textColor(yychar, yylength(), new Color(46, 125, 50)); }
+"&" | "|" | "!"
+ { return textColor(yychar, yylength(), new Color(46, 125, 50)); }
 
 /* Final */
 final { return textColor(yychar, yylength(), new Color(198, 40, 40)); }
