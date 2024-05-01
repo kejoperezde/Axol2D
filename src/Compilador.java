@@ -22,9 +22,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -41,6 +45,7 @@ public class Compilador extends javax.swing.JFrame {
     private ArrayList<Production> identProd;
     private HashMap<String, String> identificadores;
     private boolean codeHasBeenCompiled = false;
+    private HashMap<String, String> coincidenciasId = new HashMap<>();;
 
     /**
      * Creates new form Compilador
@@ -164,6 +169,7 @@ public class Compilador extends javax.swing.JFrame {
 
         jMenu1.setText("Archivo");
 
+        menuNuevo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         menuNuevo.setText("Nuevo");
         menuNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -172,6 +178,7 @@ public class Compilador extends javax.swing.JFrame {
         });
         jMenu1.add(menuNuevo);
 
+        menuAbrir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         menuAbrir.setText("Abrir");
         menuAbrir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,6 +188,7 @@ public class Compilador extends javax.swing.JFrame {
         jMenu1.add(menuAbrir);
         jMenu1.add(jSeparator1);
 
+        menuGuardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         menuGuardar.setText("Guardar");
         menuGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -198,6 +206,7 @@ public class Compilador extends javax.swing.JFrame {
         jMenu1.add(menuGuardarComo);
         jMenu1.add(jSeparator2);
 
+        menuSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0));
         menuSalir.setText("Salir");
         menuSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -210,6 +219,7 @@ public class Compilador extends javax.swing.JFrame {
 
         jMenu2.setText("Compilador");
 
+        menuLexico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         menuLexico.setText("Léxico");
         menuLexico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -218,6 +228,7 @@ public class Compilador extends javax.swing.JFrame {
         });
         jMenu2.add(menuLexico);
 
+        menuSintactico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         menuSintactico.setText("Sintáctico");
         jMenu2.add(menuSintactico);
 
@@ -241,10 +252,17 @@ public class Compilador extends javax.swing.JFrame {
 
         jMenu3.setText("TS");
 
+        menuFija.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         menuFija.setText("Fija");
         jMenu3.add(menuFija);
 
+        menuVariable.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         menuVariable.setText("Variable");
+        menuVariable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuVariableActionPerformed(evt);
+            }
+        });
         jMenu3.add(menuVariable);
 
         jMenuBar1.add(jMenu3);
@@ -321,6 +339,72 @@ public class Compilador extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuLexicoActionPerformed
 
+    private void menuVariableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVariableActionPerformed
+        // Obtener los identificadores
+        ArrayList<Token> identifiers = getVariables(tokens);
+
+        // Ordenar los identificadores por nombre
+        Collections.sort(identifiers, Comparator.comparing(Token::getLexeme));
+
+        // Crear un modelo de tabla
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Nombre");
+        model.addColumn("Tipo");
+        model.addColumn("Dirección en Memoria");
+        model.addColumn("Valor");
+        model.addColumn("Declaración");
+        model.addColumn("Coincidencias");
+
+        // Llenar el modelo de tabla con los identificadores
+        for (Token identifier : identifiers) {
+            String lexeme = identifier.getLexeme();
+            String lines = coincidenciasId.getOrDefault(lexeme, ""); // Obtener las líneas correspondientes al lexema
+
+            // Llenar la fila de la tabla con el lexema del identificador y sus coincidencias de líneas
+            model.addRow(new Object[]{lexeme, "", "", "", "", lines});
+        }
+        // Abrir la ventana de variables
+        TSVariable ventanaTSV = new TSVariable(model);
+        ventanaTSV.setVisible(true);
+    }//GEN-LAST:event_menuVariableActionPerformed
+
+    private ArrayList<Token> getVariables(ArrayList<Token> tokens) {
+        ArrayList<Token> identifiers = new ArrayList<>();
+        HashSet<String> seenIdentifiers = new HashSet<>(); // HashSet para almacenar identificadores únicos
+
+        for (Token token : tokens) {
+            if (token.getLexicalComp().equals("IDENTIFICADOR")) {
+                String lexema = token.getLexeme();
+
+                // Verifica si el identificador ya ha sido agregado antes
+                if (!seenIdentifiers.contains(lexema)) {
+                    // Agrega el identificador a la lista de identificadores y al HashSet
+                    identifiers.add(token);
+                    seenIdentifiers.add(lexema);
+                }
+
+                //Coincicencias
+                actualizarCoincidencias(token);
+            }
+        }
+        return identifiers;
+    }
+
+    private void actualizarCoincidencias(Token token) {
+        String lexema = token.getLexeme();
+        int lineNumber = token.getLine();
+
+        // Si el lexema ya está en el HashMap, agrega la línea al String existente
+        if (coincidenciasId.containsKey(lexema)) {
+            String existingLines = coincidenciasId.get(lexema);
+            existingLines += ", " + lineNumber; // Agrega la línea al String existente
+            coincidenciasId.put(lexema, existingLines);
+        } else {
+            // Si el lexema no está en el HashMap, crea un nuevo String con la línea
+            coincidenciasId.put(lexema, Integer.toString(lineNumber));
+        }
+    }
+
     private void executeCode(ArrayList<String> blocksOfCode, int repeats) {
         for (int j = 1; j <= repeats; j++) {
             int repeatCode = -1;
@@ -379,7 +463,7 @@ public class Compilador extends javax.swing.JFrame {
         printConsole();
         codeHasBeenCompiled = true;
     }
-    
+
     private void compileLexica() {
         clearFields();
         lexicalAnalysis();
