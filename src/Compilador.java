@@ -327,6 +327,7 @@ public class Compilador extends javax.swing.JFrame {
         // Abrir la ventana de variables
         TSVariable ventanaTSV = new TSVariable(model);
         ventanaTSV.setVisible(true);
+        coincidenciasId.clear();
     }//GEN-LAST:event_menuVariableActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed

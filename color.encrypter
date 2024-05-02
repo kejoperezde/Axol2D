@@ -1,2 +1,33 @@
+boolean byte int char stack queue list
 
-ggetPosition
+variable23
+
+255 260 true false a "s t r 1 n g "
+
+if else switch case break for while try catch 
+
++ - * / % ^
+
+= +- -= *= /=
+
+== != > < >= <=
+
+& | !
+
+++ --
+
+( ) { } , ;
+
+variable
+
+method return start show print rotate pop push read_tec read_bin read_mp3 read_mg
+save_bin getPosition add set random begin finish
+
+import class from new
+
+screen print_con level dimensions background platform backElement obstacles player
+Enemies music axol2D positionY positionX
+
+Controllers up down left right
+
+constant this null image size lifes enemies
