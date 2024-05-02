@@ -52,6 +52,9 @@ false { return token(yytext(), "BOOLEAN", yyline, yycolumn); }
 /* char */
 [A-Za-z] { return token(yytext(), "CHAR", yyline, yycolumn); }
 
+/* string */
+\"({Letra}|{Digito}|{EspacioEnBlanco})*\" { return token(yytext(), "STRING", yyline, yycolumn); }
+
 /* ESTTRUCTURAS DE CONTROL */
 
 /* if else */

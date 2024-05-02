@@ -2,7 +2,7 @@ boolean byte int char stack queue list
 
 variable23
 
-255 260 true false a
+255 260 true false a "s t r 1 n g "
 
 if else switch case break for while try catch 
 
