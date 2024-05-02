@@ -362,10 +362,12 @@ public class Compilador extends javax.swing.JFrame {
 
             // Llenar la fila de la tabla con el lexema del identificador y sus coincidencias de líneas
             model.addRow(new Object[]{lexeme, "", "", "", "", lines});
+            
         }
         // Abrir la ventana de variables
         TSVariable ventanaTSV = new TSVariable(model);
         ventanaTSV.setVisible(true);
+        coincidenciasId.clear();
     }//GEN-LAST:event_menuVariableActionPerformed
 
     private ArrayList<Token> getVariables(ArrayList<Token> tokens) {
