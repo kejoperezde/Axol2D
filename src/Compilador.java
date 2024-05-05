@@ -253,6 +253,11 @@ public class Compilador extends javax.swing.JFrame {
 
         menuFija.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         menuFija.setText("Fija");
+        menuFija.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuFijaActionPerformed(evt);
+            }
+        });
         jMenu3.add(menuFija);
 
         menuVariable.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -345,6 +350,130 @@ public class Compilador extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuLexicoActionPerformed
 
+    private void menuFijaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuFijaActionPerformed
+
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Operador");
+        model.addColumn("Tipo");
+      
+        Object[][] data = {
+            {"if", "Palabra reservada"},
+            {"else", "Palabra reservada"},
+            {"for", "Palabra reservada"},
+            {"while", "Palabra reservada"},
+            {"method", "Palabra reservada"},
+            {"return", "Palabra reservada"},
+            {"start", "Palabra reservada"},
+            {"import", "Palabra reservada"},
+            {"try", "Palabra reservada"},
+            {"catch", "Palabra reservada"},
+            {"switch", "Palabra reservada"},
+            {"case", "Palabra reservada"},
+            {"break", "Palabra reservada"},
+            {"int", "Palabra reservada"},
+            {"String", "Palabra reservada"},
+            {"char", "Palabra reservada"},
+            {"do", "Palabra reservada"},
+            {"boolean", "Palabra reservada"},
+            {"true", "Palabra reservada"},
+            {"false", "Palabra reservada"},
+            {"byte", "Palabra reservada"},
+            {"do while", "Palabra reservada"},
+            {"read_mp3", "Palabra reservada"},
+            {"new", "Palabra reservada"},
+            {"for each", "Palabra reservada"},
+            {"print_con", "Palabra reservada"},
+            {"background", "Palabra reservada"},
+            {"obstacles", "Palabra reservada"},
+            {"finish", "Palabra reservada"},
+            {"music", "Palabra reservada"},
+            {"positionX", "Palabra reservada"},
+            {"up", "Palabra reservada"},
+            {"read_tec", "Palabra reservada"},
+            {"read_mg", "Palabra reservada"},
+            {"block", "Palabra reservada"},
+            {"level", "Palabra reservada"},
+            {"platform", "Palabra reservada"},
+            {"player", "Palabra reservada"},
+            {"lifes", "Palabra reservada"},
+            {"axol2D", "Palabra reservada"},
+            {"add", "Palabra reservada"},
+            {"random", "Palabra reservada"},
+            {"down", "Palabra reservada"},
+            {"read_bin", "Palabra reservada"},
+            {"save_bin", "Palabra reservada"},
+            {"Enemies", "Palabra reservada"},
+            {"screen", "Palabra reservada"},
+            {"dimensions", "Palabra reservada"},
+            {"backElement", "Palabra reservada"},
+            {"begin", "Palabra reservada"},
+            {"enemies", "Palabra reservada"},
+            {"positionY", "Palabra reservada"},
+            {"set", "Palabra reservada"},
+            {"controllers", "Palabra reservada"},
+            {"left", "Palabra reservada"},
+            {"start", "Palabra reservada"},
+            {"in", "Palabra reservada"},
+            {"this", "Palabra reservada"},
+            {"show", "Palabra reservada"},
+            {"size", "Palabra reservada"},
+            {"queue", "Palabra reservada"},
+            {"push", "Palabra reservada"},
+            {"class", "Palabra reservada"},
+            {"from", "Palabra reservada"},
+            {"null", "Palabra reservada"},
+            {"print", "Palabra reservada"},
+            {"rotate", "Palabra reservada"},
+            {"list", "Palabra reservada"},
+            {"constant", "Palabra reservada"},
+            {"image", "Palabra reservada"},
+            {"position", "Palabra reservada"},
+            {"stack", "Palabra reservada"},
+            {"pop", "Palabra reservada"},
+            {"+", "Operador aritmetico"},
+            {"-", "Operador aritmetico"},
+            {"*", "Operador aritmetico"},
+            {"/", "Operador aritmetico"},
+            {"%", "Operador aritmetico"},
+            {"^", "Operador aritmetico"},
+            {"=", "Operador de asignacion"},
+            {"+=", "Operador de asignacion"},
+            {"-=", "Operador de asignacion"},
+            {"*=", "Operador de asignacion"},
+            {"/=", "Operador de asignacion"},
+            {">", "Operador relacional"},
+            {"<", "Operador relacional"},
+            {">=", "Operador relacional"},
+            {"<=", "Operador relacional"},
+            {"!=", "Operador relacional"},
+            {"==", "Operador relacional"},
+            {"&", "Operador logico"},
+            {"|", "Operador logico"},
+            {"!", "Operador logico"},
+            {"++", "Incremento"},
+            {"--", "Decremento"},
+            {"(", "delimitador parentesis que abre"},
+            {")", "delimitador parentesis que cierra"},
+            {"{", "delimitador llave que abre"},
+            {"}", "delimitador llave que cierra"},
+            {"[", "delimitador corchete que cierra"},
+            {"]", "delimitador corchete que cierra"},
+            {",", "delimitador"},
+            {";", "delimitador"},
+            
+            
+        };
+        
+        for (Object[] row : data) {
+            model.addRow(row);
+        }   
+
+        TSFija ventanaTSF = new TSFija(model);
+        ventanaTSF.setVisible(true);
+        
+    }//GEN-LAST:event_menuFijaActionPerformed
+
+    
     private ArrayList<Token> getVariables(ArrayList<Token> tokens) {
         ArrayList<Token> identifiers = new ArrayList<>();
         HashSet<String> seenIdentifiers = new HashSet<>(); // HashSet para almacenar identificadores únicos
