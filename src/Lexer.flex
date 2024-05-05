@@ -37,24 +37,24 @@ Operador = ["*","+","-","%","^","=","!","<",">","&","|"]*
 
 /* tipos de dato */
 boolean | byte | int | char |
-stack | queue | list { return token(yytext(), "TIPO_DATO", yyline, yycolumn); }
+stack | queue | list { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 
 /* byte */
-(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?) { return token(yytext(), "BYTE", yyline, yycolumn); }
+(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?) { return token(yytext(), "NUMERO", yyline, yycolumn); }
 
 /* int */
 (6553[0-4]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5]?[0-9]{1,4})
-{ return token(yytext(), "INT", yyline, yycolumn); }
+{ return token(yytext(), "NUMERO", yyline, yycolumn); }
 
 /* boolean */
 true |
-false { return token(yytext(), "BOOLEAN", yyline, yycolumn); }
+false { return token(yytext(), "BOOLEANO", yyline, yycolumn); }
 
 /* char */
-\'({Letra}|{Digito}|{EspacioEnBlanco})\' { return token(yytext(), "CHAR", yyline, yycolumn); }
+\'({Letra}|{Digito}|{EspacioEnBlanco})\' { return token(yytext(), "CADENA", yyline, yycolumn); }
 
 /* string */
-\"({Letra}|{Digito}|{EspacioEnBlanco})*\" { return token(yytext(), "STRING", yyline, yycolumn); }
+\"({Letra}|{Digito}|{EspacioEnBlanco})*\" { return token(yytext(), "CADENA", yyline, yycolumn); }
 
 /* ESTTRUCTURAS DE CONTROL */
 
@@ -117,7 +117,7 @@ enemies { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 "=" | "+-" | "-=" | "*=" | "/=" { return token (yytext(), "OP_ASIG", yyline, yycolumn); }
 
 /* Operadores comparación */
-"==" | "!=" | ">" | "<" | ">=" | "<=" { return token(yytext(), "OP_COMPARACION", yyline, yycolumn); }
+"==" | "!=" | ">" | "<" | ">=" | "<=" { return token(yytext(), "OP_COMPARA", yyline, yycolumn); }
 
 /* Operadores lógicos */
 "&" | "|" | "!" { return token(yytext(), "OP_LOGICO", yyline, yycolumn); }
@@ -132,14 +132,16 @@ enemies { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 /* DELIMINTADORES */
 
 /* Operadores de agrupación */
-"(" { return token(yytext(), "DEL_AGRUP", yyline, yycolumn); }
-")" { return token(yytext(), "DEL_AGRUP", yyline, yycolumn); }
-"{" { return token(yytext(), "DEL_AGRUP", yyline, yycolumn); }
-"}" { return token(yytext(), "DEL_AGRUP", yyline, yycolumn); }
+"(" { return token(yytext(), "DELIMITADOR", yyline, yycolumn); }
+")" { return token(yytext(), "DELIMITADOR", yyline, yycolumn); }
+"{" { return token(yytext(), "DELIMITADOR", yyline, yycolumn); }
+"}" { return token(yytext(), "DELIMITADOR", yyline, yycolumn); }
+"[" { return token(yytext(), "DELIMITADOR", yyline, yycolumn); }
+"]" { return token(yytext(), "DELIMITADOR", yyline, yycolumn); }
 
 /* Signos de puntuación */
-"," { return token(yytext(), "COMA", yyline, yycolumn); }
-";" { return token(yytext(), "PUNTO_COMA", yyline, yycolumn); }
+"," { return token(yytext(), "SEPARADOR", yyline, yycolumn); }
+";" { return token(yytext(), "SEPARADOR", yyline, yycolumn); }
 
 /* ERRORES */
 

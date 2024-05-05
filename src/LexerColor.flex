@@ -34,15 +34,6 @@ Numero = 0 | [1-9][0-9]*
 /* Comentarios o espacios en blanco */
 {Comentario}|{EspacioEnBlanco} { /*Ignorar*/ }
 
-/* tipos de dato */
-boolean | 
-byte | 
-int | 
-char { return textColor(yychar, yylength(), new Color(148, 58, 173)); }
-
-/* numeros */
-{Numero} { return textColor(yychar, yylength(), new Color(79, 252, 255)); }
-
 /* Operadores */
 "(" | ")" | "{" | "}" |
 "&" | "|" | "!" |

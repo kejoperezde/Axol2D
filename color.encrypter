@@ -1,12 +1,10 @@
 boolean byte int char stack queue list
-hola
-ZZZ23
 
 "variable23"
 
-255 260 true false a
+255 260 true false 'a'
 /**/
-'a'//123 
+//123 
 
 
 int abde=FE123;
@@ -16,7 +14,7 @@ DEE
 +++ //ERROR 5
 ;
 'a//ERROR 6
-
+Z
 ' //ERROR 6
 =
 123;
@@ -44,13 +42,13 @@ if else switch case break for while try catch
 + - * / % ^
 
 = +- -= *= /=
-hola
+
 == != > < >= <=
 
 & | !
 
 ++ --
-hola
+
 ( ) { } , ;
 
 variable
