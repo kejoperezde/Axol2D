@@ -104,6 +104,7 @@ public class Compilador extends javax.swing.JFrame {
             timerKeyReleased.stop();
             colorAnalysis();
         });
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -411,6 +412,16 @@ public class Compilador extends javax.swing.JFrame {
         } catch (IOException ex) {
             System.out.println("Error al escribir en el archivo... " + ex.getMessage());
         }
+        Grammar gramatica = new Grammar(tokens, errors);
+        gramatica.group("ERROR_LEXICO_1", "ERROR_LEXICO_1",1, "Error léxico 1: El carácter no es válido en el lenguaje [#, %]");
+        gramatica.group("ERROR_LEXICO_2", "ERROR_LEXICO_2",2, "Error léxico 2: El identificador supera la longitud maxima de 32 [#, %]");
+        gramatica.group("ERROR_LEXICO_3", "ERROR_LEXICO_3",3, "Error léxico 3: El número tiene caracteres inválidos [#, %]");
+        gramatica.group("ERROR_LEXICO_4", "ERROR_LEXICO_4",4, "Error léxico 4: El número tiene caracteres inválidos [#, %]");
+        gramatica.group("ERROR_LEXICO_5", "ERROR_LEXICO_5",5, "Error léxico 5: El identificador contiene carácteres inválidos [#, %]");
+        gramatica.group("ERROR_LEXICO_6", "ERROR_LEXICO_6",6, "Error léxico 6: El carácter no fue cerrado [#, %]");
+        gramatica.group("ERROR_LEXICO_7", "ERROR_LEXICO_7",7, "Error léxico 7: La cadena no fue cerrada [#, %]");
+        gramatica.group("ERROR_LEXICO_8", "ERROR_LEXICO_8",8, "Error léxico 8: El comentario no fue cerrado [#, %]");
+
     }
 
     private void colorAnalysis() {
@@ -438,6 +449,7 @@ public class Compilador extends javax.swing.JFrame {
             System.out.println("Error al escribir en el archivo... " + ex.getMessage());
         }
         Functions.colorTextPane(textsColor, jtpCode, new Color(40, 40, 40));
+        
     }
 
     private void fillTableTokens() {
@@ -449,6 +461,7 @@ public class Compilador extends javax.swing.JFrame {
 
     private void printConsole() {
         int sizeErrors = errors.size();
+        
         if (sizeErrors > 0) {
             Functions.sortErrorsByLineAndColumn(errors);
             String strErrors = "\n";
@@ -458,7 +471,7 @@ public class Compilador extends javax.swing.JFrame {
             }
             jtaOutputConsole.setText("Compilación terminada...\n" + strErrors + "\nLa compilación terminó con errores...");
         } else {
-            jtaOutputConsole.setText("Compilación terminada...");
+            jtaOutputConsole.setText("Compilación terminada..."+ errors.size());
         }
         jtaOutputConsole.setCaretPosition(0);
     }

@@ -27,8 +27,9 @@ Comentario = {ComentarioTradicional} | {FinDeLineaComentario} | {ComentarioDeDoc
 /* Identificador */
 Letra = [A-Za-zÑñ_ÁÉÍÓÚáéíóúÜü]
 Digito = [0-9]
-Identificador = {Letra}({Letra}|{Digito})*
-
+Identificador = {Letra}({Letra}|{Digito}){1,31}?
+Puntuacion= [^ \r,\n,"/",";","*","+","-","%","^","=","!","<",">","&","|","(",")","[","]","{","}",","]*
+Operador = ["*","+","-","%","^","=","!","<",">","&","|"]*
 %%
 
 /* Comentarios o espacios en blanco */
@@ -50,7 +51,7 @@ true |
 false { return token(yytext(), "BOOLEAN", yyline, yycolumn); }
 
 /* char */
-[A-Za-z] { return token(yytext(), "CHAR", yyline, yycolumn); }
+\'({Letra}|{Digito}|{EspacioEnBlanco})\' { return token(yytext(), "CHAR", yyline, yycolumn); }
 
 /* string */
 \"({Letra}|{Digito}|{EspacioEnBlanco})*\" { return token(yytext(), "STRING", yyline, yycolumn); }
@@ -142,5 +143,26 @@ enemies { return token(yytext(), "VALOR_ESPECIAL", yyline, yycolumn); }
 
 /* ERRORES */
 
+/*Error comentario no cerrado*/
+"/*" [^*] ~"*" | "/*" "*" { return token(yytext(), "ERROR_LEXICO_8", yyline, yycolumn); }
 
-. { return token(yytext(), "ERROR", yyline, yycolumn); }
+/* Error simbolo invalido en números */
+{Digito}{Puntuacion} { return token(yytext(), "ERROR_LEXICO_3", yyline, yycolumn); }
+
+/* Error de identificador largo */
+{Letra}({Letra}|{Digito})* { return token(yytext(), "ERROR_LEXICO_2", yyline, yycolumn); }
+
+/* Error de identificador con caracter invalido */
+{Letra}{Puntuacion} { return token(yytext(), "ERROR_LEXICO_4", yyline, yycolumn); }
+
+/* Error Operador Invalido */
+{Operador} { return token(yytext(), "ERROR_LEXICO_5", yyline, yycolumn); }
+
+/* Error Char no cerrado */
+\'({Letra}|{Digito}|{EspacioEnBlanco}) { return token(yytext(), "ERROR_LEXICO_6", yyline, yycolumn); }
+
+/* Error cadena no cerrada*/
+\"({Letra}|{Digito}|{EspacioEnBlanco})* { return token(yytext(), "ERROR_LEXICO_7", yyline, yycolumn); }
+
+/*CARACTER INVALIDO*/
+{Puntuacion} { return token(yytext(), "ERROR_LEXICO_1", yyline, yycolumn); }
