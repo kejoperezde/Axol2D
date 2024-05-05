@@ -1,14 +1,51 @@
 boolean byte int char stack queue list
 
+<<<<<<< HEAD
 gera3
 
 gera5
 
 
 variable23
+=======
+"variable23"
+>>>>>>> 09ee49f164f832ff25c708ce36bcddc9e1c4e712
 
-255 260 true false a
+255 260 true false 'a'
+/**/
+//123 
 
+
+int abde=FE123;
+DEE
+
+"Hola //ERROR 7
++++ //ERROR 5
+;
+'a//ERROR 6
+Z
+' //ERROR 6
+=
+123;
+tacos
+123;
+a
+a
+a
+a
+a
+{1}
+123Ab//ERROR 5
+; 
+//Hola
+
+Abd$wde//ERROR4
+
+≤1243d4fefdgdfgds//ERROR 1
+
+variables1111111111111111111111111212121wwwdwwdwdwdwdwd//ERROR2
+/* //Error8
+we
 if else switch case break for while try catch 
 
 + - * / % ^

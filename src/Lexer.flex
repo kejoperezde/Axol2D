@@ -27,8 +27,9 @@ Comentario = {ComentarioTradicional} | {FinDeLineaComentario} | {ComentarioDeDoc
 /* Identificador */
 Letra = [A-Za-zÑñ_ÁÉÍÓÚáéíóúÜü]
 Digito = [0-9]
-Identificador = {Letra}({Letra}|{Digito})*
-
+Identificador = {Letra}({Letra}|{Digito}){1,31}?
+Puntuacion= [^ \r,\n,"/",";","*","+","-","%","^","=","!","<",">","&","|","(",")","[","]","{","}",","]*
+Operador = ["*","+","-","%","^","=","!","<",">","&","|"]*
 %%
 
 /* Comentarios o espacios en blanco */
@@ -36,41 +37,44 @@ Identificador = {Letra}({Letra}|{Digito})*
 
 /* tipos de dato */
 boolean | byte | int | char |
-stack | queue | list { return token(yytext(), "TIPO_DATO", yyline, yycolumn); }
+stack | queue | list { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 
 /* byte */
-(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?) { return token(yytext(), "BYTE", yyline, yycolumn); }
+(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?) { return token(yytext(), "NUMERO", yyline, yycolumn); }
 
 /* int */
 (6553[0-4]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5]?[0-9]{1,4})
-{ return token(yytext(), "INT", yyline, yycolumn); }
+{ return token(yytext(), "NUMERO", yyline, yycolumn); }
 
 /* boolean */
 true |
-false { return token(yytext(), "BOOLEAN", yyline, yycolumn); }
+false { return token(yytext(), "BOOLEANO", yyline, yycolumn); }
 
 /* char */
-[A-Za-z] { return token(yytext(), "CHAR", yyline, yycolumn); }
+\'({Letra}|{Digito}|{EspacioEnBlanco})\' { return token(yytext(), "CADENA", yyline, yycolumn); }
+
+/* string */
+\"({Letra}|{Digito}|{EspacioEnBlanco})*\" { return token(yytext(), "CADENA", yyline, yycolumn); }
 
 /* ESTTRUCTURAS DE CONTROL */
 
 /* if else */
-if | else { return token(yytext(), "ES_IF_ELSE", yyline, yycolumn); }
+if | else { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 
 /* switch */
-switch | case | break { return token(yytext(), "ES_SWITCH", yyline, yycolumn); }
+switch | case | break { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 
 /* for */
-for { return token(yytext(), "ES_FOR", yyline, yycolumn); }
+for { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 
 /* whilie */
-while { return token(yytext(), "ES_WHILE", yyline, yycolumn); }
+while { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 
 /* do whilie */
-(do while) { return token(yytext(), "ES_DO_WHILE", yyline, yycolumn); }
+(do while) { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 
 /* try catch */
-try | catch { return token(yytext(), "ES_TRY_CATCH", yyline, yycolumn); }
+try | catch { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 
 
 /* PALABRAS RESERVADAS */
@@ -79,23 +83,23 @@ try | catch { return token(yytext(), "ES_TRY_CATCH", yyline, yycolumn); }
 method | return | start | show | print | rotate |
 pop | push | read_tec | read_bin | read_mp3 | read_mg |
 save_bin | getPosition | add | set | random | begin |
-finish { return token(yytext(), "MET_FUNC", yyline, yycolumn); }
+finish { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 
 /* elementos interfaz gráfica */
 screen | print_con | level | dimensions | background | platform |
 backElement | obstacles | player | Enemies | music | axol2D |
-positionY | positionX { return token(yytext(), "INTERF_GRAFICA", yyline, yycolumn); }
+positionY | positionX { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 
 /* importacion creacion*/
-import | class | from | new { return token(yytext(), "IMPORT_CREACION", yyline, yycolumn); }
+import | class | from | new { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 
 /* controladores */
 Controllers | up | down | left |
-right { return token(yytext(), "CONTROLADORES", yyline, yycolumn); }
+right { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 
 /* constantes y valores especiales */
 constant | this | null | image | size | lifes |
-enemies { return token(yytext(), "VALOR_ESPECIAL", yyline, yycolumn); }
+enemies { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 
 
 /* IDENTIFICADORES */
@@ -113,7 +117,7 @@ enemies { return token(yytext(), "VALOR_ESPECIAL", yyline, yycolumn); }
 "=" | "+-" | "-=" | "*=" | "/=" { return token (yytext(), "OP_ASIG", yyline, yycolumn); }
 
 /* Operadores comparación */
-"==" | "!=" | ">" | "<" | ">=" | "<=" { return token(yytext(), "OP_COMPARACION", yyline, yycolumn); }
+"==" | "!=" | ">" | "<" | ">=" | "<=" { return token(yytext(), "OP_COMPARA", yyline, yycolumn); }
 
 /* Operadores lógicos */
 "&" | "|" | "!" { return token(yytext(), "OP_LOGICO", yyline, yycolumn); }
@@ -128,16 +132,39 @@ enemies { return token(yytext(), "VALOR_ESPECIAL", yyline, yycolumn); }
 /* DELIMINTADORES */
 
 /* Operadores de agrupación */
-"(" { return token(yytext(), "DEL_PAR_A", yyline, yycolumn); }
-")" { return token(yytext(), "DEL_PAR_C", yyline, yycolumn); }
-"{" { return token(yytext(), "DEL_LLAVE_A", yyline, yycolumn); }
-"}" { return token(yytext(), "DEL_LLAVE_C", yyline, yycolumn); }
+"(" { return token(yytext(), "DELIMITADOR", yyline, yycolumn); }
+")" { return token(yytext(), "DELIMITADOR", yyline, yycolumn); }
+"{" { return token(yytext(), "DELIMITADOR", yyline, yycolumn); }
+"}" { return token(yytext(), "DELIMITADOR", yyline, yycolumn); }
+"[" { return token(yytext(), "DELIMITADOR", yyline, yycolumn); }
+"]" { return token(yytext(), "DELIMITADOR", yyline, yycolumn); }
 
 /* Signos de puntuación */
-"," { return token(yytext(), "COMA", yyline, yycolumn); }
-";" { return token(yytext(), "PUNTO_COMA", yyline, yycolumn); }
+"," { return token(yytext(), "SEPARADOR", yyline, yycolumn); }
+";" { return token(yytext(), "SEPARADOR", yyline, yycolumn); }
 
 /* ERRORES */
 
+/*Error comentario no cerrado*/
+"/*" [^*] ~"*" | "/*" "*" { return token(yytext(), "ERROR_LEXICO_8", yyline, yycolumn); }
 
-. { return token(yytext(), "ERROR", yyline, yycolumn); }
+/* Error simbolo invalido en números */
+{Digito}{Puntuacion} { return token(yytext(), "ERROR_LEXICO_3", yyline, yycolumn); }
+
+/* Error de identificador largo */
+{Letra}({Letra}|{Digito})* { return token(yytext(), "ERROR_LEXICO_2", yyline, yycolumn); }
+
+/* Error de identificador con caracter invalido */
+{Letra}{Puntuacion} { return token(yytext(), "ERROR_LEXICO_4", yyline, yycolumn); }
+
+/* Error Operador Invalido */
+{Operador} { return token(yytext(), "ERROR_LEXICO_5", yyline, yycolumn); }
+
+/* Error Char no cerrado */
+\'({Letra}|{Digito}|{EspacioEnBlanco}) { return token(yytext(), "ERROR_LEXICO_6", yyline, yycolumn); }
+
+/* Error cadena no cerrada*/
+\"({Letra}|{Digito}|{EspacioEnBlanco})* { return token(yytext(), "ERROR_LEXICO_7", yyline, yycolumn); }
+
+/*CARACTER INVALIDO*/
+{Puntuacion} { return token(yytext(), "ERROR_LEXICO_1", yyline, yycolumn); }

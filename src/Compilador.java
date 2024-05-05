@@ -26,7 +26,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
@@ -44,8 +43,11 @@ public class Compilador extends javax.swing.JFrame {
     private Timer timerKeyReleased;
     private ArrayList<Production> identProd;
     private HashMap<String, String> identificadores;
+    private String[] autocompletado;
     private boolean codeHasBeenCompiled = false;
-    private HashMap<String, String> coincidenciasId = new HashMap<>();;
+    private HashMap<String, String> coincidenciasId = new HashMap<>();
+
+    ;
 
     /**
      * Creates new form Compilador
@@ -72,11 +74,6 @@ public class Compilador extends javax.swing.JFrame {
         });
         // Función para poner lineas de codigo
         Functions.setLineNumberOnJTextComponent(jtpCode);
-        // Función para colorear palabras
-        timerKeyReleased = new Timer((int) (1000 * 0.3), (ActionEvent e) -> {
-            timerKeyReleased.stop();
-            colorAnalysis();
-        });
         // Función para poner asterísco
         Functions.insertAsteriskInName(this, jtpCode, () -> {
             timerKeyReleased.restart();
@@ -87,12 +84,27 @@ public class Compilador extends javax.swing.JFrame {
         textsColor = new ArrayList<>();
         identProd = new ArrayList<>();
         identificadores = new HashMap<>();
-        // Función para autocompletar (crtl + space)
-        Functions.setAutocompleterJTextComponent(new String[]{"número", "color", "adelante", "atrás",
-            "izquierda", "derecha", "norte", "sur", "este", "oeste", "pintar", "detenerPintar",
-            "tomar", "poner", "lanzarMoneda"}, jtpCode, () -> {
-            timerKeyReleased.restart();
+        autocompletado = new String[]{
+            "boolean", "byte", "int", "char", "stack", "queue", "list",
+            "if", "else", "switch", "case", "break", "for", "while", "try", "catch ",
+            "method", "return", "start", "show", "print", "rotate", "pop", "push", "read_tec", "read_bin", "read_mp3", "read_mg",
+            "save_bin", "getPosition", "add", "set", "random", "begin", "finish",
+            "import", "class", "from", "new",
+            "screen", "print_con", "level", "dimensions", "background", "platform", "backElement", "obstacles", "player",
+            "Enemies", "music", "axol2D", "positionY", "positionX",
+            "Controllers", "up", "down", "left", "right",
+            "constant", "this", "null", "image", "size", "lifes", "enemies"
+        };
+        // Función para colorear palabras
+        timerKeyReleased = new Timer((int) (1000 * 0.3), (ActionEvent e) -> {
+            // Función para autocompletar (crtl + space)
+            Functions.setAutocompleterJTextComponent(autocompletado, jtpCode, () -> {
+                timerKeyReleased.restart();
+            });
+            timerKeyReleased.stop();
+            colorAnalysis();
         });
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -118,14 +130,17 @@ public class Compilador extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         menuLexico = new javax.swing.JMenuItem();
         menuSintactico = new javax.swing.JMenuItem();
-        menuCompilar = new javax.swing.JMenuItem();
-        menuEjecutar = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         menuFija = new javax.swing.JMenuItem();
         menuVariable = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
         rootPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -232,28 +247,17 @@ public class Compilador extends javax.swing.JFrame {
         menuSintactico.setText("Sintáctico");
         jMenu2.add(menuSintactico);
 
-        menuCompilar.setText("Compilar");
-        menuCompilar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuCompilarActionPerformed(evt);
-            }
-        });
-        jMenu2.add(menuCompilar);
-
-        menuEjecutar.setText("Ejecutar");
-        menuEjecutar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuEjecutarActionPerformed(evt);
-            }
-        });
-        jMenu2.add(menuEjecutar);
-
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("TS");
 
         menuFija.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         menuFija.setText("Fija");
+        menuFija.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuFijaActionPerformed(evt);
+            }
+        });
         jMenu3.add(menuFija);
 
         menuVariable.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -302,43 +306,6 @@ public class Compilador extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_menuSalirActionPerformed
 
-    private void menuCompilarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCompilarActionPerformed
-        if (getTitle().contains("*") || getTitle().equals(title)) {
-            if (directorio.Save()) {
-                compile();
-            }
-        } else {
-            compile();
-        }
-    }//GEN-LAST:event_menuCompilarActionPerformed
-
-    private void menuEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEjecutarActionPerformed
-        menuCompilar.doClick();
-        if (codeHasBeenCompiled) {
-            if (errors.size() > 0) {
-                JOptionPane.showMessageDialog(null, "No se puede ejecutar el código ya que se encontró uno o más errores",
-                        "Error en la compilación", JOptionPane.ERROR_MESSAGE);
-            } else {
-                CodeBlock codeBlock = Functions.splitCodeInCodeBlocks(tokens, "{", "}", ";");
-                System.out.println(codeBlock);
-                ArrayList<String> blocksOfCode = codeBlock.getBlocksOfCodeInOrderOfExec();
-                System.out.println(blocksOfCode);
-                executeCode(blocksOfCode, 1);
-
-            }
-        }
-    }//GEN-LAST:event_menuEjecutarActionPerformed
-
-    private void menuLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLexicoActionPerformed
-        if (getTitle().contains("*") || getTitle().equals(title)) {
-            if (directorio.Save()) {
-                compileLexica();
-            }
-        } else {
-            compileLexica();
-        }
-    }//GEN-LAST:event_menuLexicoActionPerformed
-
     private void menuVariableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVariableActionPerformed
         // Obtener los identificadores
         ArrayList<Token> identifiers = getVariables(tokens);
@@ -370,6 +337,144 @@ public class Compilador extends javax.swing.JFrame {
         coincidenciasId.clear();
     }//GEN-LAST:event_menuVariableActionPerformed
 
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
+
+    private void menuLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLexicoActionPerformed
+        if (getTitle().contains("*") || getTitle().equals(title)) {
+            if (directorio.Save()) {
+                compileLexica();
+            }
+        } else {
+            compileLexica();
+        }
+    }//GEN-LAST:event_menuLexicoActionPerformed
+
+    private void menuFijaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuFijaActionPerformed
+
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Operador");
+        model.addColumn("Tipo");
+      
+        Object[][] data = {
+            {"if", "Palabra reservada"},
+            {"else", "Palabra reservada"},
+            {"for", "Palabra reservada"},
+            {"while", "Palabra reservada"},
+            {"method", "Palabra reservada"},
+            {"return", "Palabra reservada"},
+            {"start", "Palabra reservada"},
+            {"import", "Palabra reservada"},
+            {"try", "Palabra reservada"},
+            {"catch", "Palabra reservada"},
+            {"switch", "Palabra reservada"},
+            {"case", "Palabra reservada"},
+            {"break", "Palabra reservada"},
+            {"int", "Palabra reservada"},
+            {"String", "Palabra reservada"},
+            {"char", "Palabra reservada"},
+            {"do", "Palabra reservada"},
+            {"boolean", "Palabra reservada"},
+            {"true", "Palabra reservada"},
+            {"false", "Palabra reservada"},
+            {"byte", "Palabra reservada"},
+            {"do while", "Palabra reservada"},
+            {"read_mp3", "Palabra reservada"},
+            {"new", "Palabra reservada"},
+            {"for each", "Palabra reservada"},
+            {"print_con", "Palabra reservada"},
+            {"background", "Palabra reservada"},
+            {"obstacles", "Palabra reservada"},
+            {"finish", "Palabra reservada"},
+            {"music", "Palabra reservada"},
+            {"positionX", "Palabra reservada"},
+            {"up", "Palabra reservada"},
+            {"read_tec", "Palabra reservada"},
+            {"read_mg", "Palabra reservada"},
+            {"block", "Palabra reservada"},
+            {"level", "Palabra reservada"},
+            {"platform", "Palabra reservada"},
+            {"player", "Palabra reservada"},
+            {"lifes", "Palabra reservada"},
+            {"axol2D", "Palabra reservada"},
+            {"add", "Palabra reservada"},
+            {"random", "Palabra reservada"},
+            {"down", "Palabra reservada"},
+            {"read_bin", "Palabra reservada"},
+            {"save_bin", "Palabra reservada"},
+            {"Enemies", "Palabra reservada"},
+            {"screen", "Palabra reservada"},
+            {"dimensions", "Palabra reservada"},
+            {"backElement", "Palabra reservada"},
+            {"begin", "Palabra reservada"},
+            {"enemies", "Palabra reservada"},
+            {"positionY", "Palabra reservada"},
+            {"set", "Palabra reservada"},
+            {"controllers", "Palabra reservada"},
+            {"left", "Palabra reservada"},
+            {"start", "Palabra reservada"},
+            {"in", "Palabra reservada"},
+            {"this", "Palabra reservada"},
+            {"show", "Palabra reservada"},
+            {"size", "Palabra reservada"},
+            {"queue", "Palabra reservada"},
+            {"push", "Palabra reservada"},
+            {"class", "Palabra reservada"},
+            {"from", "Palabra reservada"},
+            {"null", "Palabra reservada"},
+            {"print", "Palabra reservada"},
+            {"rotate", "Palabra reservada"},
+            {"list", "Palabra reservada"},
+            {"constant", "Palabra reservada"},
+            {"image", "Palabra reservada"},
+            {"position", "Palabra reservada"},
+            {"stack", "Palabra reservada"},
+            {"pop", "Palabra reservada"},
+            {"+", "Operador aritmetico"},
+            {"-", "Operador aritmetico"},
+            {"*", "Operador aritmetico"},
+            {"/", "Operador aritmetico"},
+            {"%", "Operador aritmetico"},
+            {"^", "Operador aritmetico"},
+            {"=", "Operador de asignacion"},
+            {"+=", "Operador de asignacion"},
+            {"-=", "Operador de asignacion"},
+            {"*=", "Operador de asignacion"},
+            {"/=", "Operador de asignacion"},
+            {">", "Operador relacional"},
+            {"<", "Operador relacional"},
+            {">=", "Operador relacional"},
+            {"<=", "Operador relacional"},
+            {"!=", "Operador relacional"},
+            {"==", "Operador relacional"},
+            {"&", "Operador logico"},
+            {"|", "Operador logico"},
+            {"!", "Operador logico"},
+            {"++", "Incremento"},
+            {"--", "Decremento"},
+            {"(", "delimitador parentesis que abre"},
+            {")", "delimitador parentesis que cierra"},
+            {"{", "delimitador llave que abre"},
+            {"}", "delimitador llave que cierra"},
+            {"[", "delimitador corchete que cierra"},
+            {"]", "delimitador corchete que cierra"},
+            {",", "delimitador"},
+            {";", "delimitador"},
+            
+            
+        };
+        
+        for (Object[] row : data) {
+            model.addRow(row);
+        }   
+
+        TSFija ventanaTSF = new TSFija(model);
+        ventanaTSF.setVisible(true);
+        
+    }//GEN-LAST:event_menuFijaActionPerformed
+
+    
     private ArrayList<Token> getVariables(ArrayList<Token> tokens) {
         ArrayList<Token> identifiers = new ArrayList<>();
         HashSet<String> seenIdentifiers = new HashSet<>(); // HashSet para almacenar identificadores únicos
@@ -407,65 +512,6 @@ public class Compilador extends javax.swing.JFrame {
         }
     }
 
-    private void executeCode(ArrayList<String> blocksOfCode, int repeats) {
-        for (int j = 1; j <= repeats; j++) {
-            int repeatCode = -1;
-            for (int i = 0; i < blocksOfCode.size(); i++) {
-                String blockOfCode = blocksOfCode.get(i);
-                if (repeatCode != -1) {
-                    int[] posicionMarcador = CodeBlock.getPositionOfBothMarkers(blocksOfCode, blockOfCode);
-                    executeCode(new ArrayList<>(blocksOfCode.subList(posicionMarcador[0], posicionMarcador[1])), repeatCode);
-                    repeatCode = -1;
-                    i = posicionMarcador[1];
-                } else {
-                    String[] sentences = blockOfCode.split(";");
-                    for (String sentence : sentences) {
-                        sentence = sentence.trim();
-                        // Llamar código de ejecución (arduino, gráfico, etc)
-                        if (sentence.startsWith("pintar")) {
-                            String parametro;
-                            if (sentence.contains("$")) {
-                                parametro = identificadores.get(sentence.substring(9, sentence.length() - 2));
-                            } else {
-                                parametro = sentence.substring(9, sentence.length() - 2);
-                            }
-                            System.out.println("Pintando de color " + parametro + "...");
-                        } else if (sentence.startsWith("izquierda")) {
-                            System.out.println("Moviéndose a la izquierda...");
-                        } else if (sentence.startsWith("derecha")) {
-                            System.out.println("Moviéndose a la derecha...");
-                        } else if (sentence.startsWith("adelante")) {
-                            System.out.println("Moviéndose hacia adelante");
-                        } else if (sentence.contains("-->")) {
-                            String[] identComp = sentence.split(" ");
-                            System.out.println("Declarando identificador " + identComp[1] + " igual a " + identComp[3]);
-                        } else if (sentence.startsWith("atrás")) {
-                            System.out.println("Moviéndose hacia atrás");
-                        } else if (sentence.startsWith("repetir")) {
-                            String parametro;
-                            if (sentence.contains("$")) {
-                                parametro = identificadores.get(sentence.substring(10, sentence.length() - 2));
-                            } else {
-                                parametro = sentence.substring(10, sentence.length() - 2);
-                            }
-                            repeatCode = Integer.parseInt(parametro);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private void compile() {
-        clearFields();
-        lexicalAnalysis();
-        fillTableTokens();
-        syntacticAnalysis();
-        semanticAnalysis();
-        printConsole();
-        codeHasBeenCompiled = true;
-    }
-
     private void compileLexica() {
         clearFields();
         lexicalAnalysis();
@@ -496,168 +542,16 @@ public class Compilador extends javax.swing.JFrame {
         } catch (IOException ex) {
             System.out.println("Error al escribir en el archivo... " + ex.getMessage());
         }
-    }
-
-    private void syntacticAnalysis() {
         Grammar gramatica = new Grammar(tokens, errors);
+        gramatica.group("ERROR_LEXICO_1", "ERROR_LEXICO_1",1, "Error léxico 1: El carácter no es válido en el lenguaje [#, %]");
+        gramatica.group("ERROR_LEXICO_2", "ERROR_LEXICO_2",2, "Error léxico 2: El identificador supera la longitud maxima de 32 [#, %]");
+        gramatica.group("ERROR_LEXICO_3", "ERROR_LEXICO_3",3, "Error léxico 3: El número tiene caracteres inválidos [#, %]");
+        gramatica.group("ERROR_LEXICO_4", "ERROR_LEXICO_4",4, "Error léxico 4: El número tiene caracteres inválidos [#, %]");
+        gramatica.group("ERROR_LEXICO_5", "ERROR_LEXICO_5",5, "Error léxico 5: El identificador contiene carácteres inválidos [#, %]");
+        gramatica.group("ERROR_LEXICO_6", "ERROR_LEXICO_6",6, "Error léxico 6: El carácter no fue cerrado [#, %]");
+        gramatica.group("ERROR_LEXICO_7", "ERROR_LEXICO_7",7, "Error léxico 7: La cadena no fue cerrada [#, %]");
+        gramatica.group("ERROR_LEXICO_8", "ERROR_LEXICO_8",8, "Error léxico 8: El comentario no fue cerrado [#, %]");
 
-        /* Deshabilitar mensajes y validaciones */
-        gramatica.disableMessages();
-        gramatica.disableValidations();
-
-        /* Eliminación de errores */
-        gramatica.delete(new String[]{"ERROR", "ERROR_1", "ERROR_2"}, 14);
-
-        /* Agrupación de valores */
-        gramatica.group("VALOR", "(NUMERO | COLOR)", true);
-
-        /* Declaración de variables */
-        gramatica.group("VARIABLE", "TIPO_DATO IDENTIFICADOR OP_ASIG VALOR", true, identProd);
-        gramatica.group("VARIABLE", "TIPO_DATO OP_ASIG VALOR", true,
-                1, " × Error sintáctico {}: falta el identificador en la declaración de variable [#, %]");
-
-        gramatica.finalLineColumn();
-
-        gramatica.group("VARIABLE", "TIPO_DATO IDENTIFICADOR OP_ASIG", true,
-                2, " × Error sintáctico {}: falta el valor en la declaración de variable [#, %]");
-
-        gramatica.initialLineColumn();
-
-        gramatica.group("VARIABLE", "TIPO_DATO IDENTIFICADOR VALOR", true,
-                3, " × Error sintáctico {}: falta el operador de asignación en la declaración de variable [#, %]", 2);
-        gramatica.group("VARIABLE", "IDENTIFICADOR OP_ASIG VALOR", true,
-                4, " × Error sintáctico {}: falta el tipo de dato en la declaración de variable [#, %]");
-
-        /* Eliminación de tipos de datos y operadores de asignación */
-        gramatica.delete("TIPO_DATO",
-                5, " × Error sintáctico {}: el tipo de dato no está en la declaración de una variable [#, %]");
-        gramatica.delete("OP_ASIG",
-                6, " × Error sintáctico {}: el operador de asignación no está en la declaración de una variable [#, %]");
-
-        /* Agrupación de identificadores como valor y definición de parámetros */
-        gramatica.group("VALOR", "IDENTIFICADOR", true);
-        gramatica.group("PARAMETROS", "VALOR (COMA VALOR)+");
-
-        /* Agrupación de funciones */
-        gramatica.group("FUNCION", "(MOVIMIENTO | PINTAR | DETENER_PINTAR |"
-                + " TOMAR | LANZAR_MONEDA | VER | DETENER_REPETIR )", true);
-        gramatica.group("FUNCION_COMP", "FUNCION PARENTESIS_A (VALOR | PARAMETROS)? PARENTESIS_C", true);
-        gramatica.group("FUNCION_COMP", "FUNCION (VALOR | PARAMETROS)? PARENTESIS_C", true,
-                7, " × Error sintáctico {}: falta el paréntesis que abre en la función [#, %]");
-        gramatica.finalLineColumn();
-        gramatica.group("FUNCION_COMP", "FUNCION PARENTESIS_A (VALOR | PARAMETROS)", true,
-                8, " × Error sintáctico {}: falta el paréntesis que cierra en la función [#, %]");
-
-        gramatica.initialLineColumn();
-
-        /* Eliminación de funciones mal declaradas */
-        gramatica.delete("FUNCION",
-                9, " × Error sintáctico {}: La función no está declarada correctamente [#, %]");
-
-        /* Expresiones lógicas */
-        gramatica.loopForFunExecUntilChangeNotDetected(() -> {
-            gramatica.group("EXP_LOGICA", "(EXP_LOGICA | FUNCION_COMP) (OP_LOGICO (EXP_LOGICA | FUNCION_COMP))+");
-            gramatica.group("EXP_LOGICA", "PARENTESIS_A (EXP_LOGICA | FUNCION_COMP) PARENTESIS_C", true);
-        });
-
-        /* Eliminación de operadores lógicos */
-        gramatica.delete("OP_LOGICO",
-                10, " × Error sintáctico {}: El operador lógico no está contenido en una expresión [#, %]");
-
-        /* Agrupación de expresiones lógicas como valores y parámetros */
-        gramatica.group("VALOR", "EXP_LOGICA", true);
-        gramatica.group("PARAMETROS", "VALOR (COMA VALOR)+");
-
-        /* Agrupación de estructuras de control */
-        gramatica.group("EST_CONTROL", "(REPETIR | ESTRUCTURA_SI)", true);
-        gramatica.group("EST_CONTROL_COMP", "EST_CONTROL (VALOR | PARAMETROS)", true);
-        gramatica.group("EST_CONTROL_COMP", "EST_CONTROL PARENTESIS_A PARENTESIS_C", true);
-        gramatica.group("EST_CONTROL_COMP", "EST_CONTROL PARENTESIS_A (VALOR | PARAMETROS) PARENTESIS_C", true);
-        gramatica.group("EST_CONTROL_COMP", "EST_CONTROL (VALOR | PARAMETROS) PARENTESIS_C", true,
-                11, " × Error sintáctico {}: falta el paréntesis que abre en la estructura [#, %]");
-        gramatica.group("EST_CONTROL_COMP", "EST_CONTROL PARENTESIS_C", true,
-                12, " × Error sintáctico {}: falta el paréntesis que abre en la estructura [#, %]");
-        gramatica.finalLineColumn();
-        gramatica.group("EST_CONTROL_COMP", "EST_CONTROL PARENTESIS_A (VALOR | PARAMETROS)", true,
-                13, " × Error sintáctico {}: falta el paréntesis que cierra en la estructura [#, %]");
-        gramatica.group("EST_CONTROL_COMP", "EST_CONTROL PARENTESIS_A", true,
-                14, " × Error sintáctico {}: falta el paréntesis que cierra en la estructura [#, %]");
-
-        gramatica.initialLineColumn();
-
-        /* Eliminación de estructuras de control mal declaradas */
-        gramatica.delete("EST_CONTROL",
-                15, " × Error sintáctico {}: La estructura de control no está declarada correctamente [#, %]");
-
-        /* Eliminación de paréntesis */
-        gramatica.delete(new String[]{"PARENTESIS_A", "PARENTESIS_C"},
-                16, " × Error sintáctico {}: El paréntesis [] no está contenido en una agrupación [#, %]");
-
-        /* Eliminación de valores */
-        gramatica.delete("VALOR",
-                17, " × Error sintáctico {}: El valor no está contenido en una función o estructura de control [#, %]");
-
-        gramatica.finalLineColumn();
-
-        /* Verificación de punto y coma al final de la sentencia */
-        // Identificadores
-        gramatica.group("VARIABLE_PC", "VARIABLE PUNTO_COMA", true);
-        gramatica.group("VARIABLE_PC", "VARIABLE", true,
-                18, " × Error sintáctico {}: falta el punto y coma al final de la declaración de variable [#, %]");
-        // Funciones
-        gramatica.group("FUNCION_COMP_PC", "FUNCION_COMP PUNTO_COMA", true);
-        gramatica.group("FUNCION_COMP_PC", "FUNCION_COMP", true,
-                19, " × Error sintáctico {}: falta el punto y coma al final de la declaración de función [#, %]");
-
-        gramatica.initialLineColumn();
-
-        /* Eliminación de punto y coma */
-        gramatica.delete("PUNTO_COMA",
-                20, " × Error sintáctico {}: el punto y coma no está al final de una sentencia [#, %]");
-
-        /* Agrupación de sentencias */
-        gramatica.group("SENTENCIAS", "(VARIABLE_PC | FUNCION_COMP_PC)+");
-        /* Estructuras de control completas */
-        gramatica.loopForFunExecUntilChangeNotDetected(() -> {
-            gramatica.group("EST_CONTROL_COMP_LASLC", "EST_CONTROL_COMP LLAVE_A (SENTENCIAS)? LLAVE_C", true);
-            gramatica.group("SENTENCIAS", "(SENTENCIAS | EST_CONTROL_COMP_LASLC)+");
-        });
-
-        /* Estructuras de control incompletas */
-        gramatica.loopForFunExecUntilChangeNotDetected(() -> {
-            gramatica.initialLineColumn();
-
-            gramatica.group("EST_CONTROL_COMP_LASLC", "EST_CONTROL_COMP (SENTENCIAS)? LLAVE_C", true,
-                    21, " × Error sintáctico {}: falta la llave que abre en la estructura de control [#, %]");
-
-            gramatica.finalLineColumn();
-
-            gramatica.group("EST_CONTROL_COMP_LASLC", "EST_CONTROL_COMP LLAVE_A SENTENCIAS",
-                    22, " × Error sintáctico {}: falta la llave que cierra en la estructura de control [#, %]");
-            gramatica.group("SENTENCIAS", "(SENTENCIAS | EST_CONTROL_COMP_LASLC)+");
-        });
-
-        /* Eliminación de llaves */
-        gramatica.delete(new String[]{"LLAVE_A", "LLAVE_C"},
-                23, " × Error sintáctico {}: la llave no está contenida en una agrupación [#, %]");
-
-        /* Mostrar gramáticas */
-        // gramatica.show();
-    }
-
-    private void semanticAnalysis() {
-        HashMap<String, String> identDataType = new HashMap<>();
-        identDataType.put("color", "COLOR");
-        identDataType.put("número", "NUMERO");
-        for (Production id : identProd) {
-            if (!identDataType.get(id.lexemeRank(0)).equals(id.lexicalCompRank(-1))) {
-                errors.add(new ErrorLSSL(1, " × Error semántico {}: valor no compatible con el tipo de dato [#, %]", id, true));
-            }
-            if (id.lexicalCompRank(-1).equals("COLOR") && !id.lexemeRank(-1).matches("#[0-9a-fA-F]+")) {
-                errors.add(new ErrorLSSL(2, " × Error lógico {}: el color no es un número hexadecimal [#, %]", id, false));
-            }
-            identificadores.put(id.lexemeRank(1), id.lexemeRank(-1));
-        }
     }
 
     private void colorAnalysis() {
@@ -685,6 +579,7 @@ public class Compilador extends javax.swing.JFrame {
             System.out.println("Error al escribir en el archivo... " + ex.getMessage());
         }
         Functions.colorTextPane(textsColor, jtpCode, new Color(40, 40, 40));
+        
     }
 
     private void fillTableTokens() {
@@ -696,6 +591,7 @@ public class Compilador extends javax.swing.JFrame {
 
     private void printConsole() {
         int sizeErrors = errors.size();
+        
         if (sizeErrors > 0) {
             Functions.sortErrorsByLineAndColumn(errors);
             String strErrors = "\n";
@@ -705,7 +601,7 @@ public class Compilador extends javax.swing.JFrame {
             }
             jtaOutputConsole.setText("Compilación terminada...\n" + strErrors + "\nLa compilación terminó con errores...");
         } else {
-            jtaOutputConsole.setText("Compilación terminada...");
+            jtaOutputConsole.setText("Compilación terminada..."+ errors.size());
         }
         jtaOutputConsole.setCaretPosition(0);
     }
@@ -772,8 +668,6 @@ public class Compilador extends javax.swing.JFrame {
     private javax.swing.JTextArea jtaOutputConsole;
     private javax.swing.JTextPane jtpCode;
     private javax.swing.JMenuItem menuAbrir;
-    private javax.swing.JMenuItem menuCompilar;
-    private javax.swing.JMenuItem menuEjecutar;
     private javax.swing.JMenuItem menuFija;
     private javax.swing.JMenuItem menuGuardar;
     private javax.swing.JMenuItem menuGuardarComo;
