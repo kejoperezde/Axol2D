@@ -16,13 +16,15 @@ import compilerTools.Token;
 TerminadorDeLinea = \r|\n|\r\n
 EntradaDeCaracter = [^\r\n]
 EspacioEnBlanco = {TerminadorDeLinea} | [ \t\f]
-ComentarioTradicional = "/*" [^*] ~"*/" | "/*" "*"+ "/"
+ComentarioTradicional = "/°" [^*] ~"°/" | "/°" "°"+ "/"
 FinDeLineaComentario = "//" {EntradaDeCaracter}* {TerminadorDeLinea}?
 ContenidoComentario = ( [^*] | \*+ [^/*] )*
 ComentarioDeDocumentacion = "/**" {ContenidoComentario} "*"+ "/"
 
 /* Comentario */
 Comentario = {ComentarioTradicional} | {FinDeLineaComentario} | {ComentarioDeDocumentacion}
+
+
 
 /* Identificador */
 Letra = [A-Za-zÑñ_ÁÉÍÓÚáéíóúÜü]
@@ -39,6 +41,14 @@ SimbolosEnCadena = ["_","-","."]
 Cadena = ({Letra}|{Digito}|{EspacioEnBlanco}|{SimbolosEnCadena})+
 %%
 
+
+/*Error comentario no cerrado*/
+"/°" { return token(yytext(), "ERROR_LEXICO_8", yyline, yycolumn); }
+
+
+/*Error comentario no cerrado*/
+"°/" { return token(yytext(), "ERROR_LEXICO_9", yyline, yycolumn); }
+
 /* Comentarios o espacios en blanco */
 {Comentario}|{EspacioEnBlanco} { /*Ignorar*/ }
 
@@ -50,7 +60,7 @@ stack | queue | list { return token(yytext(), "PALABRA_RES", yyline, yycolumn); 
 (25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?) { return token(yytext(), "NUMERO", yyline, yycolumn); }
 
 /* int */
-(6553[0-4]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5]?[0-9]{1,4})
+(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5]?[0-9]{1,4})
 { return token(yytext(), "NUMERO", yyline, yycolumn); }
 
 /* boolean */
@@ -151,11 +161,10 @@ enemies { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 
 /* ERRORES */
 
-/* Ignorar punto */
-{Identificador}\.{Identificador} { /*ignorar*/ }
+/* Error tamaño */
+(6553[0-5]{Digito}|655[0-2][0-9]|65[0-4][0-9]{2}{Digito}|6[0-4][0-9]{3}{Digito}|[1-5]?[0-9]{1,4}{Digito})
+{ return token(yytext(), "ERROR_LEXICO_10", yyline, yycolumn);} 
 
-/*Error comentario no cerrado*/
-"/*" [^*] ~"*" | "/*" "*" { return token(yytext(), "ERROR_LEXICO_8", yyline, yycolumn); }
 
 /* Error simbolo invalido en números */
 {Digito}{Puntuacion} { return token(yytext(), "ERROR_LEXICO_3", yyline, yycolumn); }
