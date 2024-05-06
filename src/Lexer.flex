@@ -29,6 +29,7 @@ Letra = [A-Za-zÑñ_ÁÉÍÓÚáéíóúÜü]
 Digito = [0-9]
 Identificador = {Letra}({Letra}|{Digito}){1,31}?
 Puntuacion= [^ \r,\n,"/",";","*","+","-","%","^","=","!","<",">","&","|","(",")","[","]","{","}",","]*
+Puntuacion2= [^ \r,\n,"/",";","*","+","-","%","^","=","!","<",">","&","|","(",")","[","]","{","}",",","."]*
 Operador = ["*","+","-","%","^","=","!","<",">","&","|"]*
 
 
@@ -116,6 +117,7 @@ enemies { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 "." { return token(yytext(), "SEPARADOR", yyline, yycolumn); }
 "," { return token(yytext(), "SEPARADOR", yyline, yycolumn); }
 ";" { return token(yytext(), "SEPARADOR", yyline, yycolumn); }
+
 /* OPERADORES */
 
 /* Operadores aritméticos */
@@ -162,7 +164,7 @@ enemies { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 {Letra}({Letra}|{Digito})* { return token(yytext(), "ERROR_LEXICO_2", yyline, yycolumn); }
 
 /* Error de identificador con caracter invalido */
-{Letra}{Puntuacion} { return token(yytext(), "ERROR_LEXICO_4", yyline, yycolumn); }
+{Letra}{Puntuacion2} { return token(yytext(), "ERROR_LEXICO_4", yyline, yycolumn); }
 
 /* Error Operador Invalido */
 {Operador} { return token(yytext(), "ERROR_LEXICO_5", yyline, yycolumn); }
@@ -174,4 +176,4 @@ enemies { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 \"({Letra}|{Digito}|{EspacioEnBlanco})* { return token(yytext(), "ERROR_LEXICO_7", yyline, yycolumn); }
 
 /*CARACTER INVALIDO*/
-{Puntuacion} { return token(yytext(), "ERROR_LEXICO_1", yyline, yycolumn); }
+{Puntuacion2} { return token(yytext(), "ERROR_LEXICO_1", yyline, yycolumn); }

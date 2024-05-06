@@ -32,6 +32,13 @@ Identificador = {Letra}({Letra}|{Digito})*
 /* Comentarios o espacios en blanco */
 {Comentario}|{EspacioEnBlanco} { /*Ignorar*/ }
 
+/* Operadores */
+"(" | ")" | "{" | "}" |
+"&" | "|" | "!" |
+"," | ";" |
+"="
+{ return textColor(yychar, yylength(), new Color(169, 155, 179)); }
+
 /* Identificador */
 {Identificador} { /* ignorar */ }
 

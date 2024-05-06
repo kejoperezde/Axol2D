@@ -337,7 +337,7 @@ public class Compilador extends javax.swing.JFrame {
 
             // Llenar la fila de la tabla con el lexema del identificador y sus coincidencias de líneas
             model.addRow(new Object[]{lexeme, "", "", "", "", lines});
-
+            
         }
         // Abrir la ventana de variables
         TSVariable ventanaTSV = new TSVariable(model);
@@ -345,7 +345,8 @@ public class Compilador extends javax.swing.JFrame {
         coincidenciasId.clear();
     }//GEN-LAST:event_menuVariableActionPerformed
 
-
+    
+    
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
@@ -365,7 +366,7 @@ public class Compilador extends javax.swing.JFrame {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Operador");
         model.addColumn("Tipo");
-
+      
         Object[][] data = {
             {"if", "Palabra reservada"},
             {"else", "Palabra reservada"},
@@ -689,9 +690,10 @@ public class Compilador extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 }
 
+
+
 // Esta clase manejará el evento de presionar teclas en el JTextPane
 class TabKeyListener implements KeyListener {
-
     private JTextPane textPane;
 
     // Constructor que recibe el JTextPane al que se le añadirá la funcionalidad
