@@ -56,6 +56,9 @@ false { return token(yytext(), "BOOLEANO", yyline, yycolumn); }
 /* string */
 \"({Letra}|{Digito}|{EspacioEnBlanco})*\" { return token(yytext(), "CADENA", yyline, yycolumn); }
 
+/* archivo */
+^\"[a-zA-Z0-9]+\.[a-zA-Z0-9]+\"$ { return token(yytext(), "ARCHIVO", yyline, yycolumn); }
+
 /* ESTTRUCTURAS DE CONTROL */
 
 /* if else */
@@ -114,7 +117,7 @@ enemies { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 "+" | "-" | "*" | "/" | "%" | "^" { return token(yytext(), "OP_ARITMETICO", yyline, yycolumn); }
 
 /* Operador de asignación */
-"=" | "+-" | "-=" | "*=" | "/=" { return token (yytext(), "OP_ASIG", yyline, yycolumn); }
+"=" | "+=" | "-=" | "*=" | "/=" { return token (yytext(), "OP_ASIG", yyline, yycolumn); }
 
 /* Operadores comparación */
 "==" | "!=" | ">" | "<" | ">=" | "<=" { return token(yytext(), "OP_COMPARA", yyline, yycolumn); }
@@ -140,6 +143,7 @@ enemies { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 "]" { return token(yytext(), "DELIMITADOR", yyline, yycolumn); }
 
 /* Signos de puntuación */
+"." { return token(yytext(), "SEPARADOR", yyline, yycolumn); }
 "," { return token(yytext(), "SEPARADOR", yyline, yycolumn); }
 ";" { return token(yytext(), "SEPARADOR", yyline, yycolumn); }
 
