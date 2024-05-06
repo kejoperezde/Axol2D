@@ -1,44 +1,19 @@
 import Controllers;
-<<<<<<< HEAD
-import Players.Sonic;
-import Platforms.GreenHillZone;
-import Enemies.Badniks;
-=======
->>>>>>> miguel4
 import Position;
 
 level ImperioAzteca {
     dimensions dim = [800, 200];
     background fondo = "fondoImperioAzteca.jpg";
-    platform plata = block [ 750 ];
+    platform plata = block[750];
     obstacles obs = block[100];
     player guerrero;
     begin b = [5,0];
     finish f = [790,0];
     lifes life = [100,5];
     enemies nah;
-    music ms = " apocalipsis.mp3 ";
-
-int asdfghjklqwertyuiopñlkjhgfdsaqwe
+    music ms = "apocalipsis.mp3";
 
     method design() {
-<<<<<<< HEAD
-        // Posicionamiento de los anillos dorados
-        rings.positionY(0);
-        rings.positionX(Position.random(800)); 
-        
-        // Posicionamiento de los Badniks
-        badniks[0].set(10); // Motobug
-        badniks[0].position(Position.random(dm));
-        badniks[1].set(5); // Crabmeat
-        badniks[1].position(Position.random(dm));
-        badniks[2].set(7); // BuzzBomber
-        badniks[2].position(Position.random(dm));
-    }
-
-    axol2D play() {
-        GreenHillAct1.start
-=======
         //Plataformas
         plata.positionY(0);
         plata.positionX(Position.random(800));
@@ -56,7 +31,6 @@ int asdfghjklqwertyuiopñlkjhgfdsaqwe
         nah.set(40);
         nah.position(Position.random(dim));
 
->>>>>>> miguel4
     }
 
     axol2D play(){
