@@ -90,7 +90,7 @@ try | catch { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 method | return | start | show | print | rotate |
 pop | push | read_tec | read_bin | read_mp3 | read_mg |
 save_bin | getPosition | add | set | random | begin |
-finish { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
+finish | play { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 
 /* elementos interfaz gráfica */
 screen | print_con | level | dimensions | background | platform |
@@ -150,9 +150,6 @@ enemies { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 "]" { return token(yytext(), "DELIMITADOR", yyline, yycolumn); }
 
 /* ERRORES */
-
-/* Ignorar punto */
-{Identificador}\.{Identificador} { /*ignorar*/ }
 
 /*Error comentario no cerrado*/
 "/*" [^*] ~"*" | "/*" "*" { return token(yytext(), "ERROR_LEXICO_8", yyline, yycolumn); }

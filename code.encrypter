@@ -1,5 +1,5 @@
 import Controllers;
-import Players . Sonic;
+import Players.Sonic;
 import Platforms.GreenHillZone;
 import Enemies.Badniks;
 import Position;
@@ -17,7 +17,21 @@ level GreenHillAct1 {
     music ms = "greenhill_music.mp3"; // Música de fondo de Green Hill Zone
 
     method design() {
+        // Posicionamiento de los anillos dorados
+        rings.positionY(0);
+        rings.positionX(Position.random(800)); 
         
+        // Posicionamiento de los Badniks
+        badniks[0].set(10); // Motobug
+        badniks[0].position(Position.random(dm));
+        badniks[1].set(5); // Crabmeat
+        badniks[1].position(Position.random(dm));
+        badniks[2].set(7); // BuzzBomber
+        badniks[2].position(Position.random(dm));
+    }
+
+    axol2D play() {
+        GreenHillAct1.start
     }
 
 }
