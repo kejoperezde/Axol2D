@@ -29,6 +29,10 @@ import java.util.HashSet;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import javax.swing.JTextPane;
+
 /**
  *
  * @author yisus
@@ -104,6 +108,10 @@ public class Compilador extends javax.swing.JFrame {
             timerKeyReleased.stop();
             colorAnalysis();
         });
+        
+        //Tabulación de 4 espacios
+        TabKeyListener tabKeyListener = new TabKeyListener(jtpCode);
+        jtpCode.addKeyListener(tabKeyListener);
         
     }
 
@@ -337,6 +345,8 @@ public class Compilador extends javax.swing.JFrame {
         coincidenciasId.clear();
     }//GEN-LAST:event_menuVariableActionPerformed
 
+    
+    
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
@@ -679,4 +689,45 @@ public class Compilador extends javax.swing.JFrame {
     private javax.swing.JPanel rootPanel;
     private javax.swing.JTable tblTokens;
     // End of variables declaration//GEN-END:variables
+}
+
+
+
+// Esta clase manejará el evento de presionar teclas en el JTextPane
+class TabKeyListener implements KeyListener {
+    private JTextPane textPane;
+
+    // Constructor que recibe el JTextPane al que se le añadirá la funcionalidad
+    public TabKeyListener(JTextPane textPane) {
+        this.textPane = textPane;
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // No necesitamos implementar esta parte del KeyListener
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        // Verificar si se presionó la tecla Tab
+        if (e.getKeyCode() == KeyEvent.VK_TAB) {
+            e.consume(); // Evitar que el JTextPane maneje la tecla de tabulación por defecto
+
+            // Obtener el texto actual y la posición del cursor
+            String text = textPane.getText();
+            int caretPosition = textPane.getCaretPosition();
+
+            try {
+                // Insertar cuatro espacios en lugar de la tecla de tabulación
+                textPane.getDocument().insertString(caretPosition, "    ", null);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        // No necesitamos implementar esta parte del KeyListener
+    }
 }
