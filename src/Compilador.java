@@ -29,6 +29,10 @@ import java.util.HashSet;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import javax.swing.JTextPane;
+
 /**
  *
  * @author yisus
@@ -46,7 +50,6 @@ public class Compilador extends javax.swing.JFrame {
     private String[] autocompletado;
     private boolean codeHasBeenCompiled = false;
     private HashMap<String, String> coincidenciasId = new HashMap<>();
-    
 
     ;
 
@@ -105,6 +108,10 @@ public class Compilador extends javax.swing.JFrame {
             timerKeyReleased.stop();
             colorAnalysis();
         });
+        
+        //Tabulación de 4 espacios
+        TabKeyListener tabKeyListener = new TabKeyListener(jtpCode);
+        jtpCode.addKeyListener(tabKeyListener);
         
     }
 
@@ -254,6 +261,11 @@ public class Compilador extends javax.swing.JFrame {
 
         menuFija.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         menuFija.setText("Fija");
+        menuFija.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuFijaActionPerformed(evt);
+            }
+        });
         jMenu3.add(menuFija);
 
         menuVariable.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -325,6 +337,7 @@ public class Compilador extends javax.swing.JFrame {
 
             // Llenar la fila de la tabla con el lexema del identificador y sus coincidencias de líneas
             model.addRow(new Object[]{lexeme, "", "", "", "", lines});
+            
         }
         // Abrir la ventana de variables
         TSVariable ventanaTSV = new TSVariable(model);
@@ -332,6 +345,8 @@ public class Compilador extends javax.swing.JFrame {
         coincidenciasId.clear();
     }//GEN-LAST:event_menuVariableActionPerformed
 
+    
+    
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
@@ -346,6 +361,132 @@ public class Compilador extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuLexicoActionPerformed
 
+    private void menuFijaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuFijaActionPerformed
+
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Operador");
+        model.addColumn("Tipo");
+      
+        Object[][] data = {
+            {"if", "Palabra reservada"},
+            {"else", "Palabra reservada"},
+            {"for", "Palabra reservada"},
+            {"while", "Palabra reservada"},
+            {"method", "Palabra reservada"},
+            {"return", "Palabra reservada"},
+            {"start", "Palabra reservada"},
+            {"import", "Palabra reservada"},
+            {"try", "Palabra reservada"},
+            {"catch", "Palabra reservada"},
+            {"switch", "Palabra reservada"},
+            {"case", "Palabra reservada"},
+            {"break", "Palabra reservada"},
+            {"int", "Palabra reservada"},
+            {"String", "Palabra reservada"},
+            {"char", "Palabra reservada"},
+            {"do", "Palabra reservada"},
+            {"boolean", "Palabra reservada"},
+            {"true", "Palabra reservada"},
+            {"false", "Palabra reservada"},
+            {"byte", "Palabra reservada"},
+            {"do while", "Palabra reservada"},
+            {"read_mp3", "Palabra reservada"},
+            {"new", "Palabra reservada"},
+            {"for each", "Palabra reservada"},
+            {"print_con", "Palabra reservada"},
+            {"background", "Palabra reservada"},
+            {"obstacles", "Palabra reservada"},
+            {"finish", "Palabra reservada"},
+            {"music", "Palabra reservada"},
+            {"positionX", "Palabra reservada"},
+            {"up", "Palabra reservada"},
+            {"read_tec", "Palabra reservada"},
+            {"read_mg", "Palabra reservada"},
+            {"block", "Palabra reservada"},
+            {"level", "Palabra reservada"},
+            {"platform", "Palabra reservada"},
+            {"player", "Palabra reservada"},
+            {"lifes", "Palabra reservada"},
+            {"axol2D", "Palabra reservada"},
+            {"add", "Palabra reservada"},
+            {"random", "Palabra reservada"},
+            {"down", "Palabra reservada"},
+            {"read_bin", "Palabra reservada"},
+            {"save_bin", "Palabra reservada"},
+            {"Enemies", "Palabra reservada"},
+            {"screen", "Palabra reservada"},
+            {"dimensions", "Palabra reservada"},
+            {"backElement", "Palabra reservada"},
+            {"begin", "Palabra reservada"},
+            {"enemies", "Palabra reservada"},
+            {"positionY", "Palabra reservada"},
+            {"set", "Palabra reservada"},
+            {"controllers", "Palabra reservada"},
+            {"left", "Palabra reservada"},
+            {"start", "Palabra reservada"},
+            {"in", "Palabra reservada"},
+            {"this", "Palabra reservada"},
+            {"show", "Palabra reservada"},
+            {"size", "Palabra reservada"},
+            {"queue", "Palabra reservada"},
+            {"push", "Palabra reservada"},
+            {"class", "Palabra reservada"},
+            {"from", "Palabra reservada"},
+            {"null", "Palabra reservada"},
+            {"print", "Palabra reservada"},
+            {"rotate", "Palabra reservada"},
+            {"list", "Palabra reservada"},
+            {"constant", "Palabra reservada"},
+            {"image", "Palabra reservada"},
+            {"position", "Palabra reservada"},
+            {"stack", "Palabra reservada"},
+            {"pop", "Palabra reservada"},
+            {"+", "Operador aritmético"},
+            {"-", "Operador aritmético"},
+            {"*", "Operador aritmético"},
+            {"/", "Operador aritmético"},
+            {"%", "Operador aritmético"},
+            {"^", "Operador aritmético"},
+            {"=", "Operador de asignación"},
+            {"+=", "Operador de asignación"},
+            {"-=", "Operador de asignación"},
+            {"*=", "Operador de asignación"},
+            {"/=", "Operador de asignación"},
+            {">", "Operador relacional"},
+            {"<", "Operador relacional"},
+            {">=", "Operador relacional"},
+            {"<=", "Operador relacional"},
+            {"!=", "Operador relacional"},
+            {"==", "Operador relacional"},
+            {"&", "Operador lógico"},
+            {"|", "Operador lógico"},
+            {"!", "Operador lógico"},
+            {"++", "Incremento"},
+            {"--", "Decremento"},
+            {"(", "delimitador paréntesis que abre"},
+            {")", "delimitador paréntesis que cierra"},
+            {"{", "delimitador llave que abre"},
+            {"}", "delimitador llave que cierra"},
+            {"[", "delimitador corchete que cierra"},
+            {"]", "delimitador corchete que cierra"},
+            {"\"", "delimitador"},
+            {"\'", "delimitador"},
+            {",", "delimitador"},
+            {";", "delimitador"},
+            {".", "delimitador"},            
+            
+        };
+        
+        for (Object[] row : data) {
+            model.addRow(row);
+        }   
+
+        TSFija ventanaTSF = new TSFija(model);
+        ventanaTSF.setVisible(true);
+        
+    }//GEN-LAST:event_menuFijaActionPerformed
+
+    
     private ArrayList<Token> getVariables(ArrayList<Token> tokens) {
         ArrayList<Token> identifiers = new ArrayList<>();
         HashSet<String> seenIdentifiers = new HashSet<>(); // HashSet para almacenar identificadores únicos
@@ -417,8 +558,8 @@ public class Compilador extends javax.swing.JFrame {
         gramatica.group("ERROR_LEXICO_1", "ERROR_LEXICO_1",1, "Error léxico 1: El carácter no es válido en el lenguaje [#, %]");
         gramatica.group("ERROR_LEXICO_2", "ERROR_LEXICO_2",2, "Error léxico 2: El identificador supera la longitud maxima de 32 [#, %]");
         gramatica.group("ERROR_LEXICO_3", "ERROR_LEXICO_3",3, "Error léxico 3: El número tiene caracteres inválidos [#, %]");
-        gramatica.group("ERROR_LEXICO_4", "ERROR_LEXICO_4",4, "Error léxico 4: El número tiene caracteres inválidos [#, %]");
-        gramatica.group("ERROR_LEXICO_5", "ERROR_LEXICO_5",5, "Error léxico 5: El identificador contiene carácteres inválidos [#, %]");
+        gramatica.group("ERROR_LEXICO_4", "ERROR_LEXICO_4",4, "Error léxico 4: El identificador contiene carácteres inválidos [#, %]");
+        gramatica.group("ERROR_LEXICO_5", "ERROR_LEXICO_5",5, "Error léxico 5: El operador es inválido [#, %]");
         gramatica.group("ERROR_LEXICO_6", "ERROR_LEXICO_6",6, "Error léxico 6: El carácter no fue cerrado [#, %]");
         gramatica.group("ERROR_LEXICO_7", "ERROR_LEXICO_7",7, "Error léxico 7: La cadena no fue cerrada [#, %]");
         gramatica.group("ERROR_LEXICO_8", "ERROR_LEXICO_8",8, "Error léxico 8: El comentario no fue cerrado [#, %]");
@@ -550,4 +691,45 @@ public class Compilador extends javax.swing.JFrame {
     private javax.swing.JPanel rootPanel;
     private javax.swing.JTable tblTokens;
     // End of variables declaration//GEN-END:variables
+}
+
+
+
+// Esta clase manejará el evento de presionar teclas en el JTextPane
+class TabKeyListener implements KeyListener {
+    private JTextPane textPane;
+
+    // Constructor que recibe el JTextPane al que se le añadirá la funcionalidad
+    public TabKeyListener(JTextPane textPane) {
+        this.textPane = textPane;
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // No necesitamos implementar esta parte del KeyListener
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        // Verificar si se presionó la tecla Tab
+        if (e.getKeyCode() == KeyEvent.VK_TAB) {
+            e.consume(); // Evitar que el JTextPane maneje la tecla de tabulación por defecto
+
+            // Obtener el texto actual y la posición del cursor
+            String text = textPane.getText();
+            int caretPosition = textPane.getCaretPosition();
+
+            try {
+                // Insertar cuatro espacios en lugar de la tecla de tabulación
+                textPane.getDocument().insertString(caretPosition, "    ", null);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        // No necesitamos implementar esta parte del KeyListener
+    }
 }
