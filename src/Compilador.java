@@ -406,6 +406,7 @@ public class Compilador extends javax.swing.JFrame {
             {"level", "Palabra reservada"},
             {"platform", "Palabra reservada"},
             {"player", "Palabra reservada"},
+            {"play", "Palabra reservada"},
             {"lifes", "Palabra reservada"},
             {"axol2D", "Palabra reservada"},
             {"add", "Palabra reservada"},
@@ -469,11 +470,9 @@ public class Compilador extends javax.swing.JFrame {
             {"}", "delimitador llave que cierra"},
             {"[", "delimitador corchete que cierra"},
             {"]", "delimitador corchete que cierra"},
-            {"\"", "delimitador"},
-            {"\'", "delimitador"},
-            {",", "delimitador"},
-            {";", "delimitador"},
-            {".", "delimitador"},};
+            {",", "separador"},
+            {";", "separador"},
+            {".", "separador"},};
 
         for (Object[] row : data) {
             model.addRow(row);
@@ -560,6 +559,8 @@ public class Compilador extends javax.swing.JFrame {
         gramatica.group("ERROR_LEXICO_6", "ERROR_LEXICO_6", 6, "Error léxico 6: El carácter no fue cerrado [#, %]");
         gramatica.group("ERROR_LEXICO_7", "ERROR_LEXICO_7", 7, "Error léxico 7: La cadena no fue cerrada [#, %]");
         gramatica.group("ERROR_LEXICO_8", "ERROR_LEXICO_8", 8, "Error léxico 8: El comentario no fue cerrado [#, %]");
+        gramatica.group("ERROR_LEXICO_9", "ERROR_LEXICO_9", 9, "Error léxico 9: El comentario no fue abierto [#, %]");
+        gramatica.group("ERROR_LEXICO_10", "ERROR_LEXICO_10", 10, "Error léxico 10: El número superó el limite base [#, %]");
 
     }
 
@@ -610,7 +611,7 @@ public class Compilador extends javax.swing.JFrame {
             }
             jtaOutputConsole.setText("Compilación terminada...\n" + strErrors + "\nLa compilación terminó con errores...");
         } else {
-            jtaOutputConsole.setText("Compilación terminada..." + errors.size());
+            jtaOutputConsole.setText("Compilación terminada...");
         }
         jtaOutputConsole.setCaretPosition(0);
     }
