@@ -64,13 +64,12 @@ class LexerColor {
 
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
     "\11\0\1\1\1\2\1\3\1\1\1\4\22\0\1\1"+
-    "\1\5\4\0\1\5\1\0\2\5\1\6\1\0\1\5"+
-    "\2\0\1\7\12\10\1\0\1\5\1\0\1\5\3\0"+
-    "\32\11\4\0\1\11\1\0\32\11\3\5\7\0\1\3"+
-    "\73\0\1\11\7\0\1\11\3\0\1\11\3\0\1\11"+
-    "\1\0\1\11\6\0\1\11\1\0\1\11\4\0\1\11"+
-    "\7\0\1\11\3\0\1\11\3\0\1\11\1\0\1\11"+
-    "\6\0\1\11\1\0\1\11\u012b\0\2\3\326\0\u0100\3";
+    "\11\0\1\5\4\0\1\6\12\7\7\0\32\10\4\0"+
+    "\1\10\1\0\32\10\12\0\1\3\73\0\1\10\7\0"+
+    "\1\10\3\0\1\10\3\0\1\10\1\0\1\10\6\0"+
+    "\1\10\1\0\1\10\4\0\1\10\7\0\1\10\3\0"+
+    "\1\10\3\0\1\10\1\0\1\10\6\0\1\10\1\0"+
+    "\1\10\u012b\0\2\3\326\0\u0100\3";
 
   private static int [] zzUnpackcmap_blocks() {
     int [] result = new int[1024];
@@ -97,11 +96,11 @@ class LexerColor {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\1\0\1\1\2\2\1\3\1\1\1\4\1\0\1\2"+
-    "\3\0\1\2";
+    "\1\0\1\1\2\2\1\1\1\3\1\0\1\2\3\0"+
+    "\1\2";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[13];
+    int [] result = new int[12];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -126,11 +125,11 @@ class LexerColor {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\12\0\12\0\24\0\12\0\36\0\50\0\62"+
-    "\0\74\0\106\0\120\0\132\0\106";
+    "\0\0\0\11\0\11\0\22\0\33\0\44\0\55\0\66"+
+    "\0\77\0\110\0\121\0\77";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[13];
+    int [] result = new int[12];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -153,14 +152,13 @@ class LexerColor {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\2\2\3\1\0\1\4\1\5\1\2\1\6\1\2"+
-    "\1\7\14\0\1\3\15\0\1\10\1\11\12\0\2\7"+
-    "\6\12\1\13\3\12\2\11\1\3\1\11\1\4\5\11"+
-    "\6\12\1\14\11\12\1\14\1\15\10\12\1\14\1\3"+
-    "\2\12";
+    "\1\2\2\3\1\0\1\4\1\2\1\5\1\2\1\6"+
+    "\13\0\1\3\13\0\1\7\1\10\11\0\2\6\5\11"+
+    "\1\12\3\11\2\10\1\3\1\10\1\4\4\10\5\11"+
+    "\1\13\10\11\1\13\1\14\7\11\1\13\1\3\2\11";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[100];
+    int [] result = new int[90];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -203,11 +201,10 @@ class LexerColor {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\2\11\1\1\1\11\2\1\1\0\1\1\3\0"+
-    "\1\1";
+    "\1\0\2\11\3\1\1\0\1\1\3\0\1\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[13];
+    int [] result = new int[12];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -632,22 +629,17 @@ class LexerColor {
             { /* Ignorar */
             }
             // fall through
-          case 5: break;
+          case 4: break;
           case 2:
             { /*Ignorar*/
             }
             // fall through
-          case 6: break;
+          case 5: break;
           case 3:
-            { return textColor(yychar, yylength(), new Color(169, 155, 179));
-            }
-            // fall through
-          case 7: break;
-          case 4:
             { /* ignorar */
             }
             // fall through
-          case 8: break;
+          case 6: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

@@ -27,19 +27,10 @@ Letra = [A-Za-zÑñ_ÁÉÍÓÚáéíóúÜü]
 Digito = [0-9]
 Identificador = {Letra}({Letra}|{Digito})*
 
-/* Número */
-Numero = 0 | [1-9][0-9]*
 %%
 
 /* Comentarios o espacios en blanco */
 {Comentario}|{EspacioEnBlanco} { /*Ignorar*/ }
-
-/* Operadores */
-"(" | ")" | "{" | "}" |
-"&" | "|" | "!" |
-"," | ";" |
-"="
-{ return textColor(yychar, yylength(), new Color(169, 155, 179)); }
 
 /* Identificador */
 {Identificador} { /* ignorar */ }

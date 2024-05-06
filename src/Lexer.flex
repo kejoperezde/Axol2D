@@ -30,6 +30,12 @@ Digito = [0-9]
 Identificador = {Letra}({Letra}|{Digito}){1,31}?
 Puntuacion= [^ \r,\n,"/",";","*","+","-","%","^","=","!","<",">","&","|","(",")","[","]","{","}",","]*
 Operador = ["*","+","-","%","^","=","!","<",">","&","|"]*
+
+
+
+/* Cadena */
+SimbolosEnCadena = ["_","-","."]
+Cadena = ({Letra}|{Digito}|{EspacioEnBlanco}|{SimbolosEnCadena})+
 %%
 
 /* Comentarios o espacios en blanco */
@@ -54,10 +60,7 @@ false { return token(yytext(), "BOOLEANO", yyline, yycolumn); }
 \'({Letra}|{Digito}|{EspacioEnBlanco})\' { return token(yytext(), "CADENA", yyline, yycolumn); }
 
 /* string */
-\"({Letra}|{Digito}|{EspacioEnBlanco})*\" { return token(yytext(), "CADENA", yyline, yycolumn); }
-
-/* archivo */
-^\"[a-zA-Z0-9]+\.[a-zA-Z0-9]+\"$ { return token(yytext(), "ARCHIVO", yyline, yycolumn); }
+\"{Cadena}\" { return token(yytext(), "CADENA", yyline, yycolumn); }
 
 /* ESTTRUCTURAS DE CONTROL */
 
@@ -104,13 +107,15 @@ right { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 constant | this | null | image | size | lifes |
 enemies { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 
-
 /* IDENTIFICADORES */
 
 /* Identificador */
 {Identificador} { return token(yytext(), "IDENTIFICADOR", yyline, yycolumn); }
 
-
+/* Signos de puntuación */
+"." { return token(yytext(), "SEPARADOR", yyline, yycolumn); }
+"," { return token(yytext(), "SEPARADOR", yyline, yycolumn); }
+";" { return token(yytext(), "SEPARADOR", yyline, yycolumn); }
 /* OPERADORES */
 
 /* Operadores aritméticos */
@@ -142,12 +147,10 @@ enemies { return token(yytext(), "PALABRA_RES", yyline, yycolumn); }
 "[" { return token(yytext(), "DELIMITADOR", yyline, yycolumn); }
 "]" { return token(yytext(), "DELIMITADOR", yyline, yycolumn); }
 
-/* Signos de puntuación */
-"." { return token(yytext(), "SEPARADOR", yyline, yycolumn); }
-"," { return token(yytext(), "SEPARADOR", yyline, yycolumn); }
-";" { return token(yytext(), "SEPARADOR", yyline, yycolumn); }
-
 /* ERRORES */
+
+/* Ignorar punto */
+{Identificador}\.{Identificador} { /*ignorar*/ }
 
 /*Error comentario no cerrado*/
 "/*" [^*] ~"*" | "/*" "*" { return token(yytext(), "ERROR_LEXICO_8", yyline, yycolumn); }

@@ -1,3 +1,23 @@
-level MiNivel {
-    a;
+import Controllers;
+import Players . Sonic;
+import Platforms.GreenHillZone;
+import Enemies.Badniks;
+import Position;
+
+level GreenHillAct1 {
+    dimensions dimensionPantalla = [1000,200]; // Dimension de pantalla
+    background back = "greenhill_bg.png"; // Fondo de pantalla
+    platform plat = GreenHillZone; // Plataforma de suelo
+    obstacles rings = block[100]; // Cantidad de bloques (anillos dorados de Sonic)
+    player sonic = Sonic; // Personaje principal Sonic
+    beging b = [30,10]; // Posición inicial de Sonic
+    finish f = [750,100]; // Al alcanzar esta posición finaliza el nivel
+    lifes life = [100,3]; // Sonic tiene 100 anillos y 3 intentos
+    enemies[3] badniks = [Badniks.Motobug, Badniks.Crabmeat, Badniks.BuzzBomber]; // Enemigos Badniks
+    music ms = "greenhill_music.mp3"; // Música de fondo de Green Hill Zone
+
+    method design() {
+        
+    }
+
 }

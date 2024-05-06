@@ -101,18 +101,18 @@ public class Compilador extends javax.swing.JFrame {
         };
         // Función para colorear palabras
         timerKeyReleased = new Timer((int) (1000 * 0.3), (ActionEvent e) -> {
-            // Función para autocompletar (crtl + space)
-            Functions.setAutocompleterJTextComponent(autocompletado, jtpCode, () -> {
-                timerKeyReleased.restart();
-            });
+
             timerKeyReleased.stop();
             colorAnalysis();
         });
-        
+        // Función para autocompletar (crtl + space)
+        Functions.setAutocompleterJTextComponent(autocompletado, jtpCode, () -> {
+            timerKeyReleased.restart();
+        });
         //Tabulación de 4 espacios
         TabKeyListener tabKeyListener = new TabKeyListener(jtpCode);
         jtpCode.addKeyListener(tabKeyListener);
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -337,7 +337,7 @@ public class Compilador extends javax.swing.JFrame {
 
             // Llenar la fila de la tabla con el lexema del identificador y sus coincidencias de líneas
             model.addRow(new Object[]{lexeme, "", "", "", "", lines});
-            
+
         }
         // Abrir la ventana de variables
         TSVariable ventanaTSV = new TSVariable(model);
@@ -345,8 +345,7 @@ public class Compilador extends javax.swing.JFrame {
         coincidenciasId.clear();
     }//GEN-LAST:event_menuVariableActionPerformed
 
-    
-    
+
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
@@ -366,7 +365,7 @@ public class Compilador extends javax.swing.JFrame {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Operador");
         model.addColumn("Tipo");
-      
+
         Object[][] data = {
             {"if", "Palabra reservada"},
             {"else", "Palabra reservada"},
@@ -473,20 +472,17 @@ public class Compilador extends javax.swing.JFrame {
             {"\'", "delimitador"},
             {",", "delimitador"},
             {";", "delimitador"},
-            {".", "delimitador"},            
-            
-        };
-        
+            {".", "delimitador"},};
+
         for (Object[] row : data) {
             model.addRow(row);
-        }   
+        }
 
         TSFija ventanaTSF = new TSFija(model);
         ventanaTSF.setVisible(true);
-        
+
     }//GEN-LAST:event_menuFijaActionPerformed
 
-    
     private ArrayList<Token> getVariables(ArrayList<Token> tokens) {
         ArrayList<Token> identifiers = new ArrayList<>();
         HashSet<String> seenIdentifiers = new HashSet<>(); // HashSet para almacenar identificadores únicos
@@ -555,14 +551,14 @@ public class Compilador extends javax.swing.JFrame {
             System.out.println("Error al escribir en el archivo... " + ex.getMessage());
         }
         Grammar gramatica = new Grammar(tokens, errors);
-        gramatica.group("ERROR_LEXICO_1", "ERROR_LEXICO_1",1, "Error léxico 1: El carácter no es válido en el lenguaje [#, %]");
-        gramatica.group("ERROR_LEXICO_2", "ERROR_LEXICO_2",2, "Error léxico 2: El identificador supera la longitud maxima de 32 [#, %]");
-        gramatica.group("ERROR_LEXICO_3", "ERROR_LEXICO_3",3, "Error léxico 3: El número tiene caracteres inválidos [#, %]");
-        gramatica.group("ERROR_LEXICO_4", "ERROR_LEXICO_4",4, "Error léxico 4: El número tiene caracteres inválidos [#, %]");
-        gramatica.group("ERROR_LEXICO_5", "ERROR_LEXICO_5",5, "Error léxico 5: El identificador contiene carácteres inválidos [#, %]");
-        gramatica.group("ERROR_LEXICO_6", "ERROR_LEXICO_6",6, "Error léxico 6: El carácter no fue cerrado [#, %]");
-        gramatica.group("ERROR_LEXICO_7", "ERROR_LEXICO_7",7, "Error léxico 7: La cadena no fue cerrada [#, %]");
-        gramatica.group("ERROR_LEXICO_8", "ERROR_LEXICO_8",8, "Error léxico 8: El comentario no fue cerrado [#, %]");
+        gramatica.group("ERROR_LEXICO_1", "ERROR_LEXICO_1", 1, "Error léxico 1: El carácter no es válido en el lenguaje [#, %]");
+        gramatica.group("ERROR_LEXICO_2", "ERROR_LEXICO_2", 2, "Error léxico 2: El identificador supera la longitud maxima de 32 [#, %]");
+        gramatica.group("ERROR_LEXICO_3", "ERROR_LEXICO_3", 3, "Error léxico 3: El número tiene caracteres inválidos [#, %]");
+        gramatica.group("ERROR_LEXICO_4", "ERROR_LEXICO_4", 4, "Error léxico 4: El identificador contiene carácteres inválidos [#, %]");
+        gramatica.group("ERROR_LEXICO_5", "ERROR_LEXICO_5", 5, "Error léxico 5: El operador es inválido [#, %]");
+        gramatica.group("ERROR_LEXICO_6", "ERROR_LEXICO_6", 6, "Error léxico 6: El carácter no fue cerrado [#, %]");
+        gramatica.group("ERROR_LEXICO_7", "ERROR_LEXICO_7", 7, "Error léxico 7: La cadena no fue cerrada [#, %]");
+        gramatica.group("ERROR_LEXICO_8", "ERROR_LEXICO_8", 8, "Error léxico 8: El comentario no fue cerrado [#, %]");
 
     }
 
@@ -591,7 +587,7 @@ public class Compilador extends javax.swing.JFrame {
             System.out.println("Error al escribir en el archivo... " + ex.getMessage());
         }
         Functions.colorTextPane(textsColor, jtpCode, new Color(40, 40, 40));
-        
+
     }
 
     private void fillTableTokens() {
@@ -603,7 +599,7 @@ public class Compilador extends javax.swing.JFrame {
 
     private void printConsole() {
         int sizeErrors = errors.size();
-        
+
         if (sizeErrors > 0) {
             Functions.sortErrorsByLineAndColumn(errors);
             String strErrors = "\n";
@@ -613,7 +609,7 @@ public class Compilador extends javax.swing.JFrame {
             }
             jtaOutputConsole.setText("Compilación terminada...\n" + strErrors + "\nLa compilación terminó con errores...");
         } else {
-            jtaOutputConsole.setText("Compilación terminada..."+ errors.size());
+            jtaOutputConsole.setText("Compilación terminada..." + errors.size());
         }
         jtaOutputConsole.setCaretPosition(0);
     }
@@ -693,10 +689,9 @@ public class Compilador extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 }
 
-
-
 // Esta clase manejará el evento de presionar teclas en el JTextPane
 class TabKeyListener implements KeyListener {
+
     private JTextPane textPane;
 
     // Constructor que recibe el JTextPane al que se le añadirá la funcionalidad
