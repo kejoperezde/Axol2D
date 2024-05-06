@@ -1,9 +1,40 @@
-				
-repetirMientras( frenteEsClaro() = (izquierdaEsBlanco($) - derechaEsBlanco("4")){
-    adelnte( //);
-}
+import Controllers;
+import Position;
 
-si(lanzarMoneda) & derechaEsBlanco(}]*
-[
-    d7recha()
-    atrás(1);
+level ImperioAzteca {
+    dimensions dim = [800, 200];
+    background fondo = "fondoImperioAzteca.jpg";
+    platform plata = block[750];
+    obstacles obs = block[100];
+    player guerrero;
+    begin b = [5,0];
+    finish f = [790,0];
+    lifes life = [100,5];
+    enemies nah;
+    music ms = "apocalipsis.mp3";
+
+    method design() {
+        //Plataformas
+        plata.positionY(0);
+        plata.positionX(Position.random(800));
+
+        //Posicionamiento de bloques
+        obs.positionY(1);
+        obs.positionX(Position.random(800));
+
+        //Jugador
+        guerrero = Player("guerrero1.png", "guerrero2.png", 18, 10);
+
+        //Enemigo
+        nah = Enemies("nahual1.png", "nahual2.png", 18, 10, 1, 2); //(imagen, imagen, alto, ancho, tipoAtaque, velocidad)
+
+        nah.set(40);
+        nah.position(Position.random(dim));
+
+    }
+
+    axol2D play(){
+        ImperioAzteca.start();
+    }
+
+}
