@@ -553,14 +553,14 @@ public class Compilador extends javax.swing.JFrame {
         Grammar gramatica = new Grammar(tokens, errors);
         gramatica.group("ERROR_LEXICO_1", "ERROR_LEXICO_1", 1, "Error léxico 1: El carácter no es válido en el lenguaje [#, %]");
         gramatica.group("ERROR_LEXICO_2", "ERROR_LEXICO_2", 2, "Error léxico 2: El identificador supera la longitud maxima de 32 [#, %]");
-        gramatica.group("ERROR_LEXICO_3", "ERROR_LEXICO_3", 3, "Error léxico 3: El número tiene caracteres inválidos [#, %]");
-        gramatica.group("ERROR_LEXICO_4", "ERROR_LEXICO_4", 4, "Error léxico 4: El identificador contiene carácteres inválidos [#, %]");
-        gramatica.group("ERROR_LEXICO_5", "ERROR_LEXICO_5", 5, "Error léxico 5: El operador es inválido [#, %]");
-        gramatica.group("ERROR_LEXICO_6", "ERROR_LEXICO_6", 6, "Error léxico 6: El carácter no fue cerrado [#, %]");
-        gramatica.group("ERROR_LEXICO_7", "ERROR_LEXICO_7", 7, "Error léxico 7: La cadena no fue cerrada [#, %]");
-        gramatica.group("ERROR_LEXICO_8", "ERROR_LEXICO_8", 8, "Error léxico 8: El comentario no fue cerrado [#, %]");
-        gramatica.group("ERROR_LEXICO_9", "ERROR_LEXICO_9", 9, "Error léxico 9: El comentario no fue abierto [#, %]");
-        gramatica.group("ERROR_LEXICO_10", "ERROR_LEXICO_10", 10, "Error léxico 10: El número superó el limite base [#, %]");
+        gramatica.group("ERROR_LEXICO_3", "ERROR_LEXICO_3", 3, "Error léxico 3: El cadena inválida [#, %]");
+        gramatica.group("ERROR_LEXICO_4", "ERROR_LEXICO_3", 4, "Error léxico 3: El cadena inválida [#, %]");
+        gramatica.group("ERROR_LEXICO_5", "ERROR_LEXICO_4", 5, "Error léxico 4: El operador es inválido [#, %]");
+        gramatica.group("ERROR_LEXICO_6", "ERROR_LEXICO_5", 6, "Error léxico 5: El carácter no fue cerrado [#, %]");
+        gramatica.group("ERROR_LEXICO_7", "ERROR_LEXICO_6", 7, "Error léxico 6: La cadena no fue cerrada [#, %]");
+        gramatica.group("ERROR_LEXICO_8", "ERROR_LEXICO_7", 8, "Error léxico 7: El comentario no fue cerrado [#, %]");
+        gramatica.group("ERROR_LEXICO_9", "ERROR_LEXICO_8", 9, "Error léxico 8: El comentario no fue abierto [#, %]");
+        gramatica.group("ERROR_LEXICO_10", "ERROR_LEXICO_9", 10, "Error léxico 9: El número superó el limite base [#, %]");
 
     }
 
