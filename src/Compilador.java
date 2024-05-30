@@ -253,6 +253,11 @@ public class Compilador extends javax.swing.JFrame {
 
         menuSintactico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         menuSintactico.setText("Sintáctico");
+        menuSintactico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSintacticoActionPerformed(evt);
+            }
+        });
         jMenu2.add(menuSintactico);
 
         jMenuBar1.add(jMenu2);
@@ -483,6 +488,11 @@ public class Compilador extends javax.swing.JFrame {
 
     }//GEN-LAST:event_menuFijaActionPerformed
 
+    private void menuSintacticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSintacticoActionPerformed
+        System.out.print("1234");
+        compileSintactico();
+    }//GEN-LAST:event_menuSintacticoActionPerformed
+
     private ArrayList<Token> getVariables(ArrayList<Token> tokens) {
         ArrayList<Token> identifiers = new ArrayList<>();
         HashSet<String> seenIdentifiers = new HashSet<>(); // HashSet para almacenar identificadores únicos
@@ -527,7 +537,7 @@ public class Compilador extends javax.swing.JFrame {
         printConsole();
         codeHasBeenCompiled = true;
     }
-
+    
     private void lexicalAnalysis() {
         // Extraer tokens
         Lexer lexer;
@@ -561,9 +571,44 @@ public class Compilador extends javax.swing.JFrame {
         gramatica.group("ERROR_LEXICO_8", "ERROR_LEXICO_8", 8, "Error léxico 8: El comentario no fue cerrado [#, %]");
         gramatica.group("ERROR_LEXICO_9", "ERROR_LEXICO_9", 9, "Error léxico 9: El comentario no fue abierto [#, %]");
         gramatica.group("ERROR_LEXICO_10", "ERROR_LEXICO_10", 10, "Error léxico 10: El número superó el limite base [#, %]");
-
+        
     }
+    private void compileSintactico(){
+        syntacticAnalysis();
+        printConsole();
+    }
+private void syntacticAnalysis() {
+        System.out.println("Imprime");
+        Grammar gramatica = new Grammar(tokens, errors);
 
+        /* Deshabilitar mensajes y validaciones */
+
+        /* Eliminación de errores */
+        gramatica.delete(new String[]{"ERROR", "ERROR_LEXICO_1", "ERROR_LEXICO_2", "ERROR_LEXICO_3" , "ERROR_LEXICO_4", "ERROR_LEXICO_5"
+                                                , "ERROR_LEXICO_6", "ERROR_LEXICO_7", "ERROR_LEXICO_8" , "ERROR_LEXICO_9", "ERROR_LEXICO_10"}, 14);
+        //gramatica.group("programa","importaciones clases nivel",true);
+        
+        gramatica.group("libreria","(identificador punto)|(identificador punto (identificador punto)+)");
+        gramatica.group("importacion","(import (libreria)? identificador puntocoma)|(import (libreria)? identificador form identificador puntocoma)",true);
+        gramatica.group("importaciones"," (importacion)|(importacion (importacion)+)");
+        
+        
+        gramatica.group("contenidoclase", "atributos metodos");
+        
+        gramatica.group("restoclases", "(clases)?");
+        gramatica.group("clase", "class identificador { contenidoclase }");
+        gramatica.group("clases", "(clase restoclases)?");
+        
+        gramatica.group("operadorpostfijo", "incremento | decremento");
+        gramatica.group("expresionpostfijo", "(this punto)? identificador operadorpostfijo");
+        
+        gramatica.group("tipodato","int | string | boolean | char | byte | block | enemies | dimensions | background | platform | backElement | obstacles | player | begin");
+        
+   
+        gramatica.show();
+        /* Agrupación de valores */
+        //gramatica.group("VALOR", "NUMERO", true);
+}
     private void colorAnalysis() {
         /* Limpiar el arreglo de colores */
         textsColor.clear();
