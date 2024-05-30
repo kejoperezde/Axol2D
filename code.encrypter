@@ -4,16 +4,16 @@ import Position;
 level ImperioAzteca {
     dimensions dim = [800, 200];
     background fondo = "fondoImperioAzteca.jpg";
-    platform plata = block[750];
+    platform plata = block[750.5.4];
     obstacles obs = block[100];
     player guerrero;
     begin b = [5,0];
-    finish f = [790,0];
+    finish 1f = [790,0];
     lifes life = [100,5];
     enemies nah;
     music ms = "apocalipsis.mp3";
 
-    method design() {
+    m.ethod design() {
         //Plataformas
         plata.positionY(0);
         plata.positionX(Position.random(800));
@@ -32,9 +32,9 @@ level ImperioAzteca {
         nah.position(Position.random(dim));
 
     }
-
+    <=
     axol2D play(){
-        ImperioAzteca.start();
+        ImperioAzteca.start >();
     }
 
 }
